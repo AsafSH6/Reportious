@@ -1,9 +1,26 @@
 const webpack = require('webpack');
 const path = require('path');
+const glob = require('glob');
 
+const files = glob.sync('**/*.jsx').map(function (filename) { return path.normalize(filename)});
+
+const entries = {};
+for(let filename of files) {
+    entries[filename.replace('.jsx', '')] = path.join(__dirname, filename);
+}
+console.log(entries);
+
+// console.log(files);
 
 module.exports = {
-    entry: './index.jsx',
+    mode: 'development',
+    entry: entries,
+    output: {
+        path: path.join(__dirname, 'dist'),
+        publicPath: '/static/',
+        filename: '[name].js'
+    },
+    devtool: 'inline-source-map',
     module: {
         rules: [
             {
@@ -16,9 +33,13 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx']
     },
-    output: {
-        path: path.join(__dirname, 'dist'),
-        publicPath: '/static/',
-        filename: 'bundle.js'
+    plugins: [
+        new webpack.NamedModulesPlugin(),
+        new webpack.NamedChunksPlugin()
+    ],
+    devServer: {
+        contentBase: __dirname,
+        port: 8000,
+        historyApiFallback: true,
     }
 };

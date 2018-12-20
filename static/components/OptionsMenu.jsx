@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -16,26 +15,24 @@ const styles = {
     },
 };
 
-function Welcome({ classes, isLoggedIn=false }) {
+function OptionsMenu({ classes, reports = [1, 2, 3] }) {
     return (
         <div className={classes.root}>
             <Typography variant='h5' color='primary'>
-                Welcome!
+                Options Menu!
+                <div>
+                    Create new report
+                </div>
+                <div>
+                    {reports.map((report, idx) => <p key={`report${idx}`}>report: {report}</p>)}
+                </div>
             </Typography>
-
-            <Link to='/options-menu'>
-                <Button
-                    variant='outlined'
-                >
-                    LOGIN WITH GOOGLE
-                </Button>
-            </Link>
         </div>
     );
 }
 
-Welcome.propTypes = {
+OptionsMenu.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Welcome);
+export default withStyles(styles)(OptionsMenu);

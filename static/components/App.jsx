@@ -1,8 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from './AppBar.jsx'
 import Welcome from './Welcome.jsx'
+import OptionsMenu from './OptionsMenu.jsx'
+import NotFound from './NotFound.jsx'
 
 
 // A theme with custom primary and secondary color.
@@ -40,15 +43,21 @@ const styles = {
 
 function App({ classes }) {
     return (
-        <MuiThemeProvider
-            theme={theme}
-        >
-            <div className={classes.root}>
+        <Router>
+            <MuiThemeProvider theme={theme} >
                 <CssBaseline/>
-                <AppBar/>
-                <Welcome/>
-            </div>
-        </MuiThemeProvider>
+                <div className={classes.root}>
+                    <AppBar/>
+
+                    <Switch>
+                        <Route exact path='/' component={Welcome} />
+                        <Route path='/options-menu' component={OptionsMenu} />
+
+                        <Route component={NotFound} />
+                    </Switch>
+                </div>
+            </MuiThemeProvider>
+        </Router>
     )
 }
 

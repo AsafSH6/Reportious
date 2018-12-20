@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,7 +11,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const styles = {
     root: {
-        // flex: 1,
+
     },
     toolBar: {
         margin: '0vw 5vw',
@@ -31,11 +32,13 @@ function ReportiousAppBar({ classes }) {
                     className={classes.toolBar}
                 >
                     <Typography
-                        variant='title'
+                        variant='h6'
                         color='inherit'
                         className={classes.reportiousIcon}
                     >
-                        Reportious
+                        <Link to='/'>
+                            Reportious
+                        </Link>
                     </Typography>
                     <IconButton
                         color="inherit"
