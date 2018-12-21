@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
@@ -15,16 +16,30 @@ const styles = {
     },
 };
 
-function OptionsMenu({ classes, reports = [1, 2, 3] }) {
+const Reports = [
+    {
+        name: 'Working Hours Report',
+        link: 'working-hours-report/'  // TODO: save as constant.
+    },
+    {
+        name: 'Other report',
+        link: 'other-report/'  // TODO: save as constant.
+    }
+];
+
+function OptionsMenu({ classes, reportTypes = Reports}) {
     return (
         <div className={classes.root}>
             <Typography variant='h5' color='primary'>
                 Options Menu!
                 <div>
-                    Create new report
-                </div>
-                <div>
-                    {reports.map((report, idx) => <p key={`report${idx}`}>report: {report}</p>)}
+                    {reportTypes.map(reportType => (
+                        <Link key={reportType.name} to={reportType.link}>
+                            <Button >
+                                    {reportType.name}
+                            </Button>
+                        </Link>
+                    ))}
                 </div>
             </Typography>
         </div>
