@@ -30,16 +30,16 @@ function ReportiousAppBar({ classes, title = 'Reportious' }) {
                 <Toolbar
                     className={classes.toolBar}
                 >
-                    <ReportiousTitle
+                    <div
                         className={classes.reportiousIcon}
                     >
                         <ReportiousLink
                             to='/'
-                            buttonPassThroughProps={{color: 'inherit'}}
+                            buttonPassThroughProps={{color: 'inherit', variant: 'text'}}
                         >
                             {title}
                         </ReportiousLink>
-                    </ReportiousTitle>
+                    </div>
                     <IconButton
                         color="inherit"
                     >

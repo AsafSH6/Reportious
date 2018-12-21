@@ -3,15 +3,25 @@ import { Link } from 'react-router-dom';
 import ReportiousButton from './ReportiousButton.jsx';
 
 
-export default ({ to, children, linkPassThroughProps = {}, buttonPassThroughProps = {} }) => (
-    <Link
-        to={to}
-        {...linkPassThroughProps}
-    >
-        <ReportiousButton
-            {...buttonPassThroughProps}
+export default ({ to, children, linkPassThroughProps = {style: {}}, buttonPassThroughProps = {}}) => {
+    const linkProps = {
+        ...linkPassThroughProps,
+        style: {
+            textDecoration: 'none',
+            color: 'inherit',
+            ...linkPassThroughProps.style
+        }
+    };
+
+    return (
+        <Link
+            to={to}
+            {...linkProps}
         >
-            {children}
-        </ReportiousButton>
-    </Link>
-);
+            <ReportiousButton
+                {...buttonPassThroughProps}
+            >
+                {children}
+            </ReportiousButton>
+        </Link>
+)};
