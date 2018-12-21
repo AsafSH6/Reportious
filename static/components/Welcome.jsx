@@ -1,9 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { ReportiousTitle, ReportiousLink } from './ReportiousComponents';
 
 
 const styles = {
@@ -19,17 +17,12 @@ const styles = {
 function Welcome({ classes, isLoggedIn=false }) {
     return (
         <div className={classes.root}>
-            <Typography variant='h5' color='primary'>
+            <ReportiousTitle>
                 Welcome!
-            </Typography>
-
-            <Link to='/options-menu'>
-                <Button
-                    variant='outlined'
-                >
-                    LOGIN WITH GOOGLE
-                </Button>
-            </Link>
+            </ReportiousTitle>
+            <ReportiousLink to='/options-menu'>
+                LOGIN WITH GOOGLE
+            </ReportiousLink>
         </div>
     );
 }

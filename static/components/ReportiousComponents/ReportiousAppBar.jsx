@@ -1,12 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { ReportiousLink, ReportiousTitle } from '.';
 
 
 const styles = {
@@ -21,7 +20,7 @@ const styles = {
     }
 };
 
-function ReportiousAppBar({ classes }) {
+function ReportiousAppBar({ classes, title = 'Reportious' }) {
     return (
         <div className={classes.root}>
             <AppBar
@@ -31,15 +30,16 @@ function ReportiousAppBar({ classes }) {
                 <Toolbar
                     className={classes.toolBar}
                 >
-                    <Typography
-                        variant='h6'
-                        color='inherit'
+                    <ReportiousTitle
                         className={classes.reportiousIcon}
                     >
-                        <Link to='/'>
-                            Reportious
-                        </Link>
-                    </Typography>
+                        <ReportiousLink
+                            to='/'
+                            buttonPassThroughProps={{color: 'inherit'}}
+                        >
+                            {title}
+                        </ReportiousLink>
+                    </ReportiousTitle>
                     <IconButton
                         color="inherit"
                     >

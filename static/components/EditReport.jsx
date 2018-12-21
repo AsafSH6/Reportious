@@ -4,14 +4,13 @@ import { ReportiousTitle } from './ReportiousComponents';
 
 
 
-function WorkingHoursReport({ match }) {
-    console.log('working hours', match)
+function EditReport({ match }) {
     return (
         <ReportiousTitle>
-            Create working hours report!
+            Edit report {match.params.reportId}
         </ReportiousTitle>
     )
 }
 
 
-export default WorkingHoursReport;
+export default EditReport;

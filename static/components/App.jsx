@@ -1,10 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from './AppBar.jsx'
+import { ReportiousAppBar } from './ReportiousComponents'
 import Welcome from './Welcome.jsx'
 import OptionsMenu from './OptionsMenu.jsx'
+import ReportsPreview from './ReportsPreview.jsx'
+import ViewReport from './ViewReport.jsx'
+import EditReport from './EditReport.jsx'
+import CreateReport from './CreateReport.jsx'
 import NotFound from './NotFound.jsx'
 
 
@@ -47,12 +51,15 @@ function App({ classes }) {
             <MuiThemeProvider theme={theme} >
                 <CssBaseline/>
                 <div className={classes.root}>
-                    <AppBar/>
+                    <ReportiousAppBar/>
 
                     <Switch>
                         <Route exact path='/' component={Welcome} />
-                        <Route path='/options-menu' component={OptionsMenu} />
-
+                        <Route path='/options-menu/' component={OptionsMenu} />
+                        <Route path='/reports-preview/:reportType/' component={ReportsPreview} />
+                        <Route path='/create-report/:reportType/' component={CreateReport} />
+                        <Route path='/view-report/:reportId/' component={ViewReport} />
+                        <Route path='/edit-report/:reportId/' component={EditReport} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>
