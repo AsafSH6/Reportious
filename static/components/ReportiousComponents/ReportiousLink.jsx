@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ReportiousButton from './ReportiousButton.jsx';
 
 
-export default ({ to, children, useButton = true, linkPassThroughProps = {style: {}}, buttonPassThroughProps = {}}) => {
+export default ({ to, children, className, useButton = true, linkPassThroughProps = {style: {}}, buttonPassThroughProps = {}}) => {
     const Content = useButton ? ReportiousButton : React.Fragment;
 
     const linkProps = {
@@ -17,6 +17,7 @@ export default ({ to, children, useButton = true, linkPassThroughProps = {style:
 
     return (
         <Link
+            className={className}
             to={to}
             {...linkProps}
         >

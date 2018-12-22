@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import { ReportiousLink, ReportiousTitle } from '.';
 
 
@@ -43,6 +44,9 @@ function ReportiousAppBar({ classes, title = 'Reportious' }) {
                                 style: {textTransform: 'none'}
                             }}
                         >
+                            <LibraryBooks
+                                fontSize='large'
+                            />
                             <Typography
                                 variant='h5'
                                 color='inherit'

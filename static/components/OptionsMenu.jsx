@@ -39,8 +39,7 @@ const ReportOption = withStyles(optionStyles)(({ classes, className, reportType 
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
-                            image="/images/backgroundpic.jpg"
-                            title="Contemplative Reptile"
+                            image={reportType.img}
                         />
                         <CardContent
                             className={classes.content}

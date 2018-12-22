@@ -1,31 +1,19 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
+
+import { reportTypeToPreview } from '../constants.jsx'
 import { ReportiousTitle, ReportiousLink } from './ReportiousComponents';
 
 
-const reportTypeToPreview = {
-    'working-hours-report': [
-        {
-            id: 1,
-            name: 'report1',
-            date: new Date(9, 5, 1995)
-        },
-        {
-            id: 2,
-            name: 'report2',
-            date: new Date(10, 5, 1995)
-        }
-    ],
-    'other-report': [
-        {
-            id: 3,
-            name: 'nothing',
-            date: new Date()
-        }
-    ]
-};
+const reportStyle = theme => ({
 
-function ReportPreview({ report }) {
+});
+
+
+const ReportPreview = withStyles(reportStyle)(({ classes, report }) => {
     return (
         <ReportiousLink
             key={report.name}
@@ -34,32 +22,72 @@ function ReportPreview({ report }) {
             {`${report.name} ${report.date.toDateString()}`}
         </ReportiousLink>
     )
-}
+});
 
 
-function ReportsPreview({ match }) {
+const reportsPreviewStyle = theme => ({
+    root: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start'
+    },
+    content: {
+        flex: 1,
+        margin: theme.spacing.unit * 4,
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    preview: {
+        flex: 1,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    create: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    }
+});
+
+
+const ReportsPreview = withStyles(reportsPreviewStyle)(({ classes, match }) => {
     const reportType = match.params.reportType;
     const relevantReports = reportTypeToPreview[reportType];
 
     return (
-        <div>
+        <div className={classes.root}>
             <ReportiousTitle>
-                Preview!
+                Preview
             </ReportiousTitle>
-            {relevantReports.map(report => (
-                <ReportPreview
-                    key={report.id}
-                    report={report}
-                />
-            ))}
-            <ReportiousLink
-                to={`/create-report/${reportType}/`}
-            >
-                Create report
-            </ReportiousLink>
+            <div className={classes.content}>
+                <div className={classes.preview}>
+                {relevantReports.map(report => (
+                    <ReportPreview
+                        key={report.id}
+                        report={report}
+                    />
+                ))}
+                </div>
+                <ReportiousLink
+                    className={classes.create}
+                    to={`/create-report/${reportType}/`}
+                    useButton={false}
+                >
+                    <Fab
+                        color='primary'
+                    >
+                        <AddIcon fontSize='default' />
+                    </Fab>
+                </ReportiousLink>
+            </div>
         </div>
     )
-}
+});
 
 
 export default ReportsPreview;
