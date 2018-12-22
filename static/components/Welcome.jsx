@@ -10,7 +10,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-start'
     },
 };
 
@@ -20,7 +20,7 @@ function Welcome({ classes, isLoggedIn=false }) {
             <ReportiousTitle>
                 Welcome!
             </ReportiousTitle>
-            <ReportiousLink to='/options-menu'>
+            <ReportiousLink to='/options-menu/'>
                 LOGIN WITH GOOGLE
             </ReportiousLink>
         </div>

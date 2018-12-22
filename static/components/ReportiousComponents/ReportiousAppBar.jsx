@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -35,9 +36,19 @@ function ReportiousAppBar({ classes, title = 'Reportious' }) {
                     >
                         <ReportiousLink
                             to='/'
-                            buttonPassThroughProps={{color: 'inherit', variant: 'text'}}
+                            buttonPassThroughProps={{
+                                color: 'inherit',
+                                size: 'large',
+                                variant: 'text',
+                                style: {textTransform: 'none'}
+                            }}
                         >
-                            {title}
+                            <Typography
+                                variant='h5'
+                                color='inherit'
+                            >
+                                <b> {title} </b>
+                            </Typography>
                         </ReportiousLink>
                     </div>
                     <IconButton

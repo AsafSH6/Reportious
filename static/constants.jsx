@@ -6,5 +6,9 @@ export const allReportTypes = [
     {
         name: 'Other report',
         type: 'other-report'
+    },
+    {
+        name: 'Other report2',
+        type: 'other-report2'
     }
 ];

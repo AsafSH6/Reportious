@@ -1,13 +1,34 @@
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Divider  from '@material-ui/core/Divider';
 
 
-export default ({ children, ...passThroughProps }) => (
+const styles = theme => ({
+    root: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: theme.spacing.unit * 2,
+    },
+    border: {
+        minWidth: '33%',
+        marginTop: theme.spacing.unit * 2,
+    }
+});
+
+
+const ReportiousTitle = ({ classes, children, ...passThroughProps }) => (
     <Typography
-        variant='h5'
+        className={classes.root}
+        variant='h3'
         color='primary'
         {...passThroughProps}
     >
         {children}
+        <Divider className={classes.border} />
     </Typography>
 );
+
+export default withStyles(styles)(ReportiousTitle);
