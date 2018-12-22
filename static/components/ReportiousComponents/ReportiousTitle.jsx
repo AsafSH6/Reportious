@@ -23,7 +23,7 @@ const ReportiousTitle = ({ classes, children, ...passThroughProps }) => (
     <Typography
         className={classes.root}
         variant='h3'
-        color='primary'
+        color='secondary'
         {...passThroughProps}
     >
         {children}

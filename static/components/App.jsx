@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ReportiousAppBar } from './ReportiousComponents'
 import Welcome from './Welcome.jsx'
 import OptionsMenu from './OptionsMenu.jsx'
-import ReportsPreview from './ReportsPreview.jsx'
+import ReportPreview from './ReportsPreview.jsx'
 import ViewReport from './ViewReport.jsx'
 import EditReport from './EditReport.jsx'
 import CreateReport from './CreateReport.jsx'
@@ -21,10 +21,7 @@ const theme = createMuiTheme({
             contrastText: '#0a65bc',
         },
         secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
-            contrastText: '#000',
+            main: '#606c76',
         },
     },
     typography: {
@@ -56,7 +53,7 @@ function App({ classes }) {
                     <Switch>
                         <Route exact path='/' component={Welcome} />
                         <Route path='/options-menu/' component={OptionsMenu} />
-                        <Route path='/reports-preview/:reportType/' component={ReportsPreview} />
+                        <Route path='/reports-preview/:reportType/' component={ReportPreview} />
                         <Route path='/create-report/:reportType/' component={CreateReport} />
                         <Route path='/view-report/:reportId/' component={ViewReport} />
                         <Route path='/edit-report/:reportId/' component={EditReport} />
