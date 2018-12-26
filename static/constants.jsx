@@ -28,6 +28,25 @@ export const reportTypeToPreview = {
             id: 2,
             name: 'report2',
             date: new Date(10, 5, 1995)
+        },
+        {
+            id: 3,
+            name: 'report3',
+            date: new Date(10, 5, 1995)
+        },
+        {
+            id: 4,
+            name: 'report4',
+            date: new Date(10, 5, 1995)
+        },
+        {
+            id: 5,
+            name: 'report5',
+            date: new Date(10, 5, 1995)
+        },        {
+            id: 6,
+            name: 'report6',
+            date: new Date(10, 5, 1995)
         }
     ],
     'other-report': [

@@ -10,10 +10,3 @@ export {
     ReportiousAppBar
 }
 
-export default {
-    ReportiousAppBar,
-    ReportiousButton,
-    ReportiousLink,
-    ReportiousTitle,
-};
-
