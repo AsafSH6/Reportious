@@ -6,7 +6,6 @@ import Divider  from '@material-ui/core/Divider';
 
 const styles = theme => ({
     root: {
-        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

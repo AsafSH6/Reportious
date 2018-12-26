@@ -53,7 +53,7 @@ function App({ classes }) {
                     <Switch>
                         <Route exact path='/' component={Welcome} />
                         <Route path='/options-menu/' component={OptionsMenu} />
-                        <Route path='/reports-preview/:reportType/' component={ReportPreview} />
+                        <Route path='/reports-preview/:reportType/:viewingReportId?' component={ReportPreview} />
                         <Route path='/create-report/:reportType/' component={CreateReport} />
                         <Route path='/view-report/:reportId/' component={ViewReport} />
                         <Route path='/edit-report/:reportId/' component={EditReport} />

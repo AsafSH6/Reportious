@@ -57,3 +57,17 @@ export const reportTypeToPreview = {
         }
     ]
 };
+
+
+export const reports = {
+    1: {
+        date: new Date(9, 5, 1995),
+        daysReport: {
+            day: 1,
+            startHour: "17:00",
+            endHour: "18:00",
+            Amount: 2
+        },
+        drivingInKM: 350
+    }
+}
