@@ -2,14 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { ReportiousAppBar } from './ReportiousComponents'
-import Welcome from './Welcome.jsx'
-import OptionsMenu from './OptionsMenu.jsx'
-import ReportPreview from './ReportsPreview.jsx'
-import ViewReport from './ViewReport.jsx'
-import EditReport from './EditReport.jsx'
-import CreateReport from './CreateReport.jsx'
-import NotFound from './NotFound.jsx'
+import { ReportiousAppBar } from './ReportiousComponents';
+import Welcome from './Welcome.jsx';
+import Footer from './Footer.jsx';
+import OptionsMenu from './OptionsMenu.jsx';
+import ReportPreview from './ReportsPreview.jsx';
+import ViewReport from './ViewReport.jsx';
+import EditReport from './EditReport.jsx';
+import CreateReport from './CreateReport.jsx';
+import NotFound from './NotFound.jsx';
 
 
 // A theme with custom primary and secondary color.
@@ -59,6 +60,7 @@ function App({ classes }) {
                         <Route path='/edit-report/:reportId/' component={EditReport} />
                         <Route component={NotFound} />
                     </Switch>
+                    <Footer/>
                 </div>
             </MuiThemeProvider>
         </Router>
