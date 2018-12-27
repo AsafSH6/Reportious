@@ -12,6 +12,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import Edit from '@material-ui/icons/EditRounded';
+import Cancel from '@material-ui/icons/CancelRounded';
 import { toFormattedDate, getHoursList} from '../utils.jsx'
 import NumberFormatTextField from './NumberFormatTextField.jsx'
 import { reports } from '../constants.jsx';
@@ -22,7 +25,17 @@ const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 
 const styles = theme => ({
     root: {
-
+    },
+    iconButtons: {
+        position: 'absolute',
+        right: 0,
+        zIndex: 1,
+    },
+    edit: {
+        padding: `${theme.spacing.unit}px ${theme.spacing.unit / 2}px`,
+    },
+    close: {
+        padding: `${theme.spacing.unit}px ${theme.spacing.unit / 2}px`,
     },
     title: {
         textAlign: 'center',
@@ -73,7 +86,8 @@ class Report extends React.Component {
         super(props);
 
         this.state = {
-            report: reports[1] // Should get from this.props.reportId in ComponentDidMount by API request.
+            report: reports[1], // Should get from this.props.reportId in ComponentDidMount by API request.
+            editMode: this.props.editMode
         }
     }
 
@@ -137,6 +151,25 @@ class Report extends React.Component {
         })
     };
 
+    onDrivingKMChange = event => {
+        this.setState(prevState => {
+            const { report } = prevState;
+
+            return {
+                report: {
+                    ...report,
+                    drivingInKM: event.target.value
+                }
+            }
+        })
+    };
+
+    onEnableEditMode = event => {
+        this.setState({
+            editMode: true
+        })
+    };
+
     getTotalWorkingHours = () => {
         const { report } = this.state;
         const reducer = (sum, dayReport) => {
@@ -155,7 +188,7 @@ class Report extends React.Component {
     };
 
     render() {
-        const { report } = this.state;
+        const { report, editMode } = this.state;
         const { classes, isOpen, onClose } = this.props;
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
@@ -204,6 +237,7 @@ class Report extends React.Component {
                             InputProps={{
                                 inputComponent: NumberFormatTextField,
                             }}
+                            disabled={editMode === false}
                         />
                         <Select
                             value={dayReport.endHour}
@@ -211,9 +245,13 @@ class Report extends React.Component {
                             name="בחר"
                             displayEmpty
                             className={ClassNames(classes.reportRowItem, classes.selectHour)}
+                            disabled={editMode === false}
                         >
                             <MenuItem value="" disabled>
                                 בחר
+                            </MenuItem>
+                            <MenuItem value="-">
+                                --
                             </MenuItem>
                             {possibleWorkHoursList.map((workHour, idx) => (
                                 <MenuItem
@@ -229,9 +267,13 @@ class Report extends React.Component {
                             name="בחר"
                             displayEmpty
                             className={ClassNames(classes.reportRowItem, classes.selectHour)}
+                            disabled={editMode === false}
                         >
                             <MenuItem value="" disabled>
                                 בחר
+                            </MenuItem>
+                            <MenuItem value="-">
+                                --
                             </MenuItem>
                             {possibleWorkHoursList.map((workHour, idx) => (
                                 <MenuItem
@@ -260,6 +302,7 @@ class Report extends React.Component {
             <TextField
                 id="outlined-simple-start-adornment"
                 value={report.drivingInKM}
+                onChange={this.onDrivingKMChange}
                 variant="outlined"
                 label="נסיעות"
                 className={classes.drivingDistance}
@@ -267,6 +310,7 @@ class Report extends React.Component {
                     className: classes.input
                 }}
                 InputProps={{
+                    readOnly: editMode === false,
                     inputComponent: NumberFormatTextField,
                     startAdornment: <InputAdornment position="start">קילומטרים</InputAdornment>,
                 }}
@@ -291,10 +335,52 @@ class Report extends React.Component {
             />
         );
 
-        const Download = (
-            <Button onClick={onClose} color="primary">
-                Download
-            </Button>
+        const Close = (
+            (<IconButton
+                onClick={onClose}
+                className={classes.close}
+            >
+                <Cancel/>
+            </IconButton>)
+        );
+
+        const IconButtons = (
+            <div
+                className={classes.iconButtons}
+            >
+                {
+                    editMode === false ?
+                        (<IconButton
+                            onClick={this.onEnableEditMode}
+                            className={classes.edit}
+                        >
+                            <Edit/>
+                        </IconButton>)
+                            :
+                        null
+                }
+                {Close}
+            </div>
+        );
+
+        const ActionButtons = (
+            <React.Fragment>
+            {editMode === false? (
+                <Button onClick={onClose} color="primary">
+                    Download
+                </Button>)
+                   : (
+               <React.Fragment>
+                    <Button onClick={onClose} color="primary">
+                        Save
+                    </Button>
+                    <Button onClick={onClose} color="primary">
+                        Cancel
+                    </Button>
+               </React.Fragment>
+                )
+            }
+            </React.Fragment>
         );
 
         return (
@@ -303,7 +389,9 @@ class Report extends React.Component {
                     open={isOpen}
                     onClose={onClose}
                     aria-labelledby="form-dialog-title"
+                    className={classes.root}
                 >
+                    {IconButtons}
                     <DialogTitle
                         id="form-dialog-title"
                         className={classes.title}
@@ -328,7 +416,7 @@ class Report extends React.Component {
                     <DialogActions
                         className={classes.actions}
                     >
-                        {Download}
+                        {ActionButtons}
                     </DialogActions>
                 </Dialog>
             </div>
