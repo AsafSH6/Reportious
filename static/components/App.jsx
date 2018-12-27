@@ -6,7 +6,6 @@ import { ReportiousAppBar } from './ReportiousComponents'
 import Welcome from './Welcome.jsx'
 import OptionsMenu from './OptionsMenu.jsx'
 import ReportPreview from './ReportsPreview.jsx'
-import ViewReport from './ViewReport.jsx'
 import EditReport from './EditReport.jsx'
 import CreateReport from './CreateReport.jsx'
 import NotFound from './NotFound.jsx'
@@ -55,7 +54,6 @@ function App({ classes }) {
                         <Route path='/options-menu/' component={OptionsMenu} />
                         <Route path='/reports-preview/:reportType/:viewingReportId?' component={ReportPreview} />
                         <Route path='/create-report/:reportType/' component={CreateReport} />
-                        <Route path='/view-report/:reportId/' component={ViewReport} />
                         <Route path='/edit-report/:reportId/' component={EditReport} />
                         <Route component={NotFound} />
                     </Switch>

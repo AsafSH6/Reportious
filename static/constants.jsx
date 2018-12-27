@@ -62,12 +62,18 @@ export const reportTypeToPreview = {
 export const reports = {
     1: {
         date: new Date(9, 5, 1995),
-        daysReport: [...Array(31)].map((_, idx) => ({
+        daysReport: [{
+            day: 0,
+            startHour: "",
+            endHour: "17:00",
+            amount: 1
+        },
+        ...[...Array(30)].map((_, idx) => ({
             day: idx + 1,
             startHour: "17:00",
             endHour: "18:00",
             amount: 2
-        })),
+        }))],
         drivingInKM: 350
     }
 };

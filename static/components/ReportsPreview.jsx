@@ -10,8 +10,8 @@ import AddIcon from '@material-ui/icons/Add';
 import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
 import { reportTypeToPreview } from '../constants.jsx'
 import { ReportiousTitle, ReportiousButton, ReportiousLink } from './ReportiousComponents';
-import ViewReport from './ViewReport.jsx';
-import toFormattedDate from '../utils.jsx'
+import Report from './Report.jsx';
+import { toFormattedDate } from '../utils.jsx'
 
 
 const reportStyle = theme => ({
@@ -94,7 +94,7 @@ class ReportPreview extends React.Component {
                         </div>
                     </Paper>
                 </ReportiousButton>
-                <ViewReport
+                <Report
                     isOpen={viewingReport}
                     onClose={this.closeViewReport}
                     reportId={report.id}
