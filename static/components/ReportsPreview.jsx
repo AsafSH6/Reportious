@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import chroma from 'chroma-js'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -12,11 +11,8 @@ import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
 import { reportTypeToPreview } from '../constants.jsx'
 import { ReportiousTitle, ReportiousButton, ReportiousLink } from './ReportiousComponents';
 import ViewReport from './ViewReport.jsx';
+import toFormattedDate from '../utils.jsx'
 
-
-const toFormattedDate = date => (
-    moment(date).format('DD/MM/YYYY')
-);
 
 const reportStyle = theme => ({
     root: {
