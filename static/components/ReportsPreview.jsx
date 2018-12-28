@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
+import IconButton from '@material-ui/core/IconButton';
 import { reportTypeToPreview } from '../constants.jsx'
 import { ReportiousTitle, ReportiousButton, ReportiousLink } from './ReportiousComponents';
 import Report from './Report.jsx';
@@ -107,6 +108,47 @@ class ReportPreview extends React.Component {
 
 ReportPreview = withStyles(reportStyle)(ReportPreview);
 
+class ReportCreate extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            creatingReport: false
+        }
+    }
+
+    onCreateReport = () => {
+        this.setState({creatingReport: true});
+    };
+
+    onClose = () => {
+        this.setState({creatingReport: false});
+    };
+
+    render() {
+        const { creatingReport } = this.state;
+
+        return (
+            <div>
+                <Fab
+                    color='primary'
+                    onClick={this.onCreateReport}
+                >
+                    <AddIcon
+                        fontSize='large'
+                    />
+                </Fab>
+                <Report
+                    isOpen={creatingReport}
+                    onClose={this.onClose}
+                    reportId={0}
+                    editMode={true}
+                />
+            </div>
+        )
+    }
+}
+
 const reportsPreviewStyle = theme => ({
     root: {
         flex: 1,
@@ -174,16 +216,7 @@ class ReportsPreview extends React.Component {
                     <div
                         className={classes.create}
                     >
-                        <ReportiousLink
-                            to={`/create-report/${reportType}/`}
-                            useButton={false}
-                        >
-                            <Fab
-                                color='primary'
-                            >
-                                <AddIcon fontSize='default'/>
-                            </Fab>
-                        </ReportiousLink>
+                        <ReportCreate/>
                     </div>
                 </div>
             </div>

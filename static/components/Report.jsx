@@ -170,6 +170,19 @@ class Report extends React.Component {
         })
     };
 
+    onCancel = event => {
+        this.setState({
+            editMode: false
+        })
+    };
+
+    onSave = event => {
+        console.log('Save!')
+        this.setState({
+            editMode: false
+        })
+    }
+
     getTotalWorkingHours = () => {
         const { report } = this.state;
         const reducer = (sum, dayReport) => {
@@ -371,10 +384,10 @@ class Report extends React.Component {
                 </Button>)
                    : (
                <React.Fragment>
-                    <Button onClick={onClose} color="primary">
+                    <Button onClick={this.onSave} color="primary">
                         Save
                     </Button>
-                    <Button onClick={onClose} color="primary">
+                    <Button onClick={this.onCancel} color="primary">
                         Cancel
                     </Button>
                </React.Fragment>
