@@ -1,13 +1,14 @@
 import React from 'react';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 import { ReportiousAppBar } from './ReportiousComponents'
 import Welcome from './Welcome.jsx'
 import OptionsMenu from './OptionsMenu.jsx'
-import ReportPreview from './ReportsPreview.jsx'
-import EditReport from './EditReport.jsx'
-import CreateReport from './CreateReport.jsx'
+import { Reports } from './Reports'
 import NotFound from './NotFound.jsx'
 
 
@@ -52,9 +53,7 @@ function App({ classes }) {
                     <Switch>
                         <Route exact path='/' component={Welcome} />
                         <Route path='/options-menu/' component={OptionsMenu} />
-                        <Route path='/reports-preview/:reportType/:viewingReportId?' component={ReportPreview} />
-                        <Route path='/create-report/:reportType/' component={CreateReport} />
-                        <Route path='/edit-report/:reportId/' component={EditReport} />
+                        <Route path='/reports/:reportType/:viewingReportId?' component={Reports} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>

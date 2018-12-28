@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
-
 
 import { allReportTypes } from '../constants.jsx';
 import { ReportiousTitle, ReportiousLink } from './ReportiousComponents';
@@ -33,7 +32,7 @@ const ReportOption = withStyles(optionStyles)(({ classes, className, reportType 
         <div className={className}>
             <ReportiousLink
                 useButton={false}
-                to={`/reports-preview/${reportType.type}/`}
+                to={`/reports/${reportType.type}/`}
             >
                 <Card className={classes.card}>
                     <CardActionArea>

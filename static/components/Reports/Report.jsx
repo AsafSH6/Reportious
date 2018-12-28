@@ -1,5 +1,7 @@
 import React from 'react';
+
 import ClassNames from 'classnames';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -15,10 +17,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/EditRounded';
 import Cancel from '@material-ui/icons/CancelRounded';
-import { toFormattedDate, getHoursList} from '../utils.jsx'
-import NumberFormatTextField from './NumberFormatTextField.jsx'
-import { reports } from '../constants.jsx';
 
+import { reports } from '../../constants.jsx';
+import { toFormattedDate, getHoursList} from '../../utils.jsx'
+import NumberFormatTextField from '../NumberFormatTextField.jsx'
 
 
 const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
@@ -177,11 +179,11 @@ class Report extends React.Component {
     };
 
     onSave = event => {
-        console.log('Save!')
+        console.log('Save!');
         this.setState({
             editMode: false
         })
-    }
+    };
 
     getTotalWorkingHours = () => {
         const { report } = this.state;
@@ -206,111 +208,89 @@ class Report extends React.Component {
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
 
-        const ReportSubjects = (
-            <div className={classes.reportRow}>
-                <Typography
-                    className={classes.reportRowItem}
-                >
-                    מספר גנים
-                </Typography>
-                <Typography
-                    className={classes.reportRowItem}
-                >
-                    עד שעה
-                </Typography>
-                <Typography
-                    className={classes.reportRowItem}
-                >
-                    משעה
-                </Typography>
-                <Typography
-                    className={classes.reportRowItem}
-                >
-                    יום בחודש
-                </Typography>
-            </div>
-        );
-
-        const ReportWorkingHours = (
-            <div
-                className={classes.reportDays}
+        const ReportSubjects = ['יום בחודש', 'משעה', 'עד שעה', 'מספר גנים'].map((subject, idx) => (
+            <Typography
+                key={`report-subject-${idx}`}
+                className={classes.reportRowItem}
             >
-                {report.daysReport.map((dayReport, idx) => (
-                    <div
-                        key={`day-report-${report.id}-${idx}`}
-                        className={classes.reportRow}
+                {subject}
+            </Typography>
+        ));
+
+        const ReportWorkingHours = report.daysReport.map((dayReport, idx) => (
+                <div
+                    key={`day-report-${report.id}-${idx}`}
+                    className={classes.reportRow}
+                >
+                    <TextField
+                        className={classes.reportRowItem}
+                        onChange={this.onAmountChange(idx)}
+                        value={dayReport.amount}
+                        inputProps={{
+                            className: classes.input
+                        }}
+                        InputProps={{
+                            inputComponent: NumberFormatTextField,
+                        }}
+                        disabled={editMode === false}
+                    />
+                    <Select
+                        value={dayReport.endHour}
+                        onChange={this.onEndHourChange(idx)}
+                        name="בחר"
+                        displayEmpty
+                        className={ClassNames(classes.reportRowItem, classes.selectHour)}
+                        disabled={editMode === false}
                     >
-                        <TextField
-                            className={classes.reportRowItem}
-                            onChange={this.onAmountChange(idx)}
-                            value={dayReport.amount}
-                            inputProps={{
-                                className: classes.input
-                            }}
-                            InputProps={{
-                                inputComponent: NumberFormatTextField,
-                            }}
-                            disabled={editMode === false}
-                        />
-                        <Select
-                            value={dayReport.endHour}
-                            onChange={this.onEndHourChange(idx)}
-                            name="בחר"
-                            displayEmpty
-                            className={ClassNames(classes.reportRowItem, classes.selectHour)}
-                            disabled={editMode === false}
-                        >
-                            <MenuItem value="" disabled>
-                                בחר
+                        <MenuItem value="" disabled>
+                            בחר
+                        </MenuItem>
+                        <MenuItem value="-">
+                            --
+                        </MenuItem>
+                        {possibleWorkHoursList.map((workHour, idx) => (
+                            <MenuItem
+                                key={`end-hour-${report.id}-${idx}`}
+                                value={workHour}>
+                                {workHour}
                             </MenuItem>
-                            <MenuItem value="-">
-                                --
+                        ))}
+                    </Select>
+                    <Select
+                        value={dayReport.startHour}
+                        onChange={this.onStartHourChange(idx)}
+                        name="בחר"
+                        displayEmpty
+                        className={ClassNames(classes.reportRowItem, classes.selectHour)}
+                        disabled={editMode === false}
+                    >
+                        <MenuItem value="" disabled>
+                            בחר
+                        </MenuItem>
+                        <MenuItem value="-">
+                            --
+                        </MenuItem>
+                        {possibleWorkHoursList.map((workHour, idx) => (
+                            <MenuItem
+                                key={`start-hour-${report.id}-${idx}`}
+                                value={workHour}>
+                                {workHour}
                             </MenuItem>
-                            {possibleWorkHoursList.map((workHour, idx) => (
-                                <MenuItem
-                                    key={`end-hour-${report.id}-${idx}`}
-                                    value={workHour}>
-                                    {workHour}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                        <Select
-                            value={dayReport.startHour}
-                            onChange={this.onStartHourChange(idx)}
-                            name="בחר"
-                            displayEmpty
-                            className={ClassNames(classes.reportRowItem, classes.selectHour)}
-                            disabled={editMode === false}
-                        >
-                            <MenuItem value="" disabled>
-                                בחר
-                            </MenuItem>
-                            <MenuItem value="-">
-                                --
-                            </MenuItem>
-                            {possibleWorkHoursList.map((workHour, idx) => (
-                                <MenuItem
-                                    key={`start-hour-${report.id}-${idx}`}
-                                    value={workHour}>
-                                    {workHour}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                        <TextField
-                            className={classes.reportRowItem}
-                            value={`.${dayReport.day}`}
-                            inputProps={{
-                                className: classes.input
-                            }}
-                            InputProps={{
-                                disableUnderline: true, readOnly: true
-                            }}
-                        />
-                    </div>
-                ))}
-            </div>
-        );
-        
+                        ))}
+                    </Select>
+                    <TextField
+                        className={classes.reportRowItem}
+                        value={`.${dayReport.day}`}
+                        inputProps={{
+                            className: classes.input
+                        }}
+                        InputProps={{
+                            disableUnderline: true, readOnly: true
+                        }}
+                    />
+                </div>
+            ));
+
         const DroveHours = (
             <TextField
                 id="outlined-simple-start-adornment"
@@ -415,9 +395,17 @@ class Report extends React.Component {
                     <DialogContent
                         className={classes.content}
                     >
-                        {ReportSubjects}
+                        <div
+                            className={classes.reportRow}
+                        >
+                            {ReportSubjects}
+                        </div>
                         <Divider variant='middle'/>
-                        {ReportWorkingHours}
+                        <div
+                            className={classes.reportDays}
+                        >
+                            {ReportWorkingHours}
+                        </div>
                     </DialogContent>
                     <DialogContent
                         className={classes.secondContent}
