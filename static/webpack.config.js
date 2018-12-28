@@ -10,7 +10,6 @@ for(let filename of files) {
 }
 console.log(entries);
 
-// console.log(files);
 
 module.exports = {
     mode: 'development',
@@ -20,7 +19,7 @@ module.exports = {
         publicPath: '/static/',
         filename: '[name].js'
     },
-    devtool: 'inline-source-map',
+    devtool: 'eval-source-map',
     module: {
         rules: [
             {
