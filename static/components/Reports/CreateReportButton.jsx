@@ -33,7 +33,7 @@ class CreateReportButton extends React.Component {
                     onClick={this.onCreateReport}
                 >
                     <AddIcon
-                        fontSize='large'
+                        fontSize='default'
                     />
                 </Fab>
                 <Report
