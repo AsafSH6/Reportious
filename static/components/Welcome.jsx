@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { ReportiousTitle, ReportiousLink } from './ReportiousComponents';
+import {
+    ReportiousTitle,
+    ReportiousLink
+} from './ReportiousComponents';
 
 
 const styles = {
@@ -16,13 +19,14 @@ const styles = {
     },
 };
 
-function Welcome({ classes, isLoggedIn=false }) {
+function Welcome({ classes, isLoggedIn }) {
+    console.log(isLoggedIn);
     return (
         <div className={classes.root}>
             <ReportiousTitle>
                 Welcome!
             </ReportiousTitle>
-            <ReportiousLink to='/options-menu/'>
+            <ReportiousLink to='/options/'>
                 LOGIN WITH GOOGLE
             </ReportiousLink>
         </div>

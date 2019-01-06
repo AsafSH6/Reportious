@@ -8,8 +8,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-import { allReportTypes } from '../constants.jsx';
-import { ReportiousTitle, ReportiousLink } from './ReportiousComponents';
+import {
+    ReportiousTitle,
+    ReportiousLink
+} from './ReportiousComponents';
 
 
 const optionStyles = {
@@ -78,24 +80,34 @@ const optionMenuStyles = theme => ({
 });
 
 
-function OptionsMenu({ classes }) {
-    return (
-        <div className={classes.root}>
-            <ReportiousTitle>
-                Options
-            </ReportiousTitle>
-            <div className={classes.options}>
-                {allReportTypes.map(reportType => (
-                    <ReportOption
-                        key={reportType.name}
-                        className={classes.option}
-                        reportType={reportType}
-                    />
-                ))}
+class OptionsMenu extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        this.props.updateOptions();
+    }
+
+    render() {
+        const { classes, reportOptions } = this.props;
+        return (
+            <div className={classes.root}>
+                <ReportiousTitle>
+                    Options
+                </ReportiousTitle>
+                <div className={classes.options}>
+                    {reportOptions.map(reportType => (
+                        <ReportOption
+                            key={reportType.name}
+                            className={classes.option}
+                            reportType={reportType}
+                        />
+                    ))}
+                </div>
             </div>
-        </div>
-    );
-}
+        );
+}}
 
 OptionsMenu.propTypes = {
     classes: PropTypes.object.isRequired,

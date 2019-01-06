@@ -6,10 +6,13 @@ import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { ReportiousAppBar } from './ReportiousComponents'
-import Welcome from './Welcome.jsx'
-import OptionsMenu from './OptionsMenu.jsx'
-import { Reports } from './Reports'
 import NotFound from './NotFound.jsx'
+
+import {
+    Welcome,
+    Options,
+    Reports,
+} from '../pages';
 
 
 // A theme with custom primary and secondary color.
@@ -51,10 +54,21 @@ function App({ classes }) {
                     <ReportiousAppBar/>
 
                     <Switch>
-                        <Route exact path='/' component={Welcome} />
-                        <Route path='/options-menu/' component={OptionsMenu} />
-                        <Route path='/reports/:reportType/:viewingReportId?' component={Reports} />
-                        <Route component={NotFound} />
+                        <Route
+                            exact path='/'
+                            component={Welcome}
+                        />
+                        <Route
+                            path='/options/'
+                            component={Options}
+                        />
+                        <Route
+                            path='/reports/:reportType/:viewingReportId?'
+                            component={Reports}
+                        />
+                        <Route
+                            component={NotFound}
+                        />
                     </Switch>
                 </div>
             </MuiThemeProvider>

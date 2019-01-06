@@ -1,3 +1,6 @@
+export const UPDATE_REPORTS = 'update_reports';
+export const UPDATE_OPTIONS = 'update_options';
+
 export const allReportTypes = [
     {
         name: 'Working Hours Report',
@@ -5,75 +8,36 @@ export const allReportTypes = [
         img: '/images/backgroundpic.jpg'
     },
     {
-        name: 'Other report',
-        type: 'other-report',
+        name: 'Coming Soon 1',
+        type: 'coming-soon-1',
         img: '/images/backgroundpic.jpg'
     },
     {
-        name: 'Other report2',
-        type: 'other-report2',
+        name: 'Coming Soon 2',
+        type: 'coming-soon-2',
         img: '/images/backgroundpic.jpg'
     }
 ];
 
-
-export const reportTypeToPreview = {
-    'working-hours-report': [
-        {
-            id: 1,
-            name: 'report1',
-            date: new Date(9, 5, 1995)
-        },
-        {
-            id: 2,
-            name: 'report2',
-            date: new Date(10, 5, 1995)
-        },
-        {
-            id: 3,
-            name: 'report3',
-            date: new Date(10, 5, 1995)
-        },
-        {
-            id: 4,
-            name: 'report4',
-            date: new Date(10, 5, 1995)
-        },
-        {
-            id: 5,
-            name: 'report5',
-            date: new Date(10, 5, 1995)
-        },        {
-            id: 6,
-            name: 'report6',
-            date: new Date(10, 5, 1995)
-        }
-    ],
-    'other-report': [
-        {
-            id: 3,
-            name: 'nothing',
-            date: new Date()
-        }
-    ]
-};
-
-
 export const reports = {
-    1: {
-        date: new Date(9, 5, 1995),
-        daysReport: [{
-            day: 0,
-            startHour: "",
-            endHour: "17:00",
-            amount: 1
-        },
-        ...[...Array(30)].map((_, idx) => ({
-            day: idx + 1,
-            startHour: "17:00",
-            endHour: "18:00",
-            amount: 2
-        }))],
-        drivingInKM: 350
-    }
+    'working-hours-report': [...Array(6)].map((_ ,idx) => ({
+            name: `report ${idx}`,
+            date: new Date(2018, idx, idx + 1),
+            daysReport: [{
+                day: 0,
+                startHour: "",
+                endHour: "17:00",
+                amount: 1
+            },
+                ...[...Array(30)].map((_, idx) => ({
+                    day: idx + 1,
+                    startHour: "17:00",
+                    endHour: "18:00",
+                    amount: 2
+            }))],
+            drivingInKM: 10 * idx,
+        })
+    ),
+    'coming-soon-1': [],
+    'coming-soon-2': [],
 };

@@ -18,7 +18,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/EditRounded';
 import Cancel from '@material-ui/icons/CancelRounded';
 
-import { reports } from '../../constants.jsx';
 import { toFormattedDate, getHoursList} from '../../utils.jsx'
 import NumberFormatTextField from '../NumberFormatTextField.jsx'
 
@@ -88,7 +87,7 @@ class Report extends React.Component {
         super(props);
 
         this.state = {
-            report: reports[1], // Should get from this.props.reportId in ComponentDidMount by API request.
+            report: this.props.reportData, // Should get from this.props.reportId in ComponentDidMount by API request.
             editMode: this.props.editMode
         }
     }

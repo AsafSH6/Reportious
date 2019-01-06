@@ -2,8 +2,6 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import chroma from 'chroma-js'
-
 import { reportTypeToPreview } from '../../constants.jsx'
 import { ReportiousTitle } from '../ReportiousComponents';
 import ReportPreview from './ReportPreview.jsx';
@@ -45,16 +43,16 @@ const reportsPreviewStyle = theme => ({
 class Reports extends React.Component {
     constructor(props) {
         super(props);
-
-        const reportType = this.props.match.params.reportType;
-        this.relevantReports = reportTypeToPreview[reportType].sort((r1, r2) => r2.date - r1.date);
-        this.colors = chroma.scale(['#2A4858', '#0a65bc', '#8dc6da']).domain([0, this.relevantReports.length]);
     }
 
-    indexToColor = index => this.colors(index).hex();
+    componentDidMount() {
+        this.props.loadReports();
+    }
+
+    indexToColor = index => this.props.colors(index).hex();
 
     render() {
-        const { classes, match } = this.props;
+        const { classes, match, reports } = this.props;
         const { viewingReportId } = match.params;
 
         return (
@@ -64,9 +62,9 @@ class Reports extends React.Component {
                 </ReportiousTitle>
                 <div className={classes.content}>
                     <div className={classes.preview}>
-                        {this.relevantReports.map((report, idx) => (
+                        {reports.map((report, idx) => (
                             <ReportPreview
-                                key={report.id}
+                                key={`report-preview-${idx}`}
                                 className={classes.reportPreview}
                                 report={report}
                                 viewingReport={viewingReportId === String(report.id)}

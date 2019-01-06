@@ -95,7 +95,7 @@ class ReportPreview extends React.Component {
                 <Report
                     isOpen={viewingReport}
                     onClose={this.closeViewReport}
-                    reportId={report.id}
+                    reportData={report}
                     editMode={false}
                 />
             </div>

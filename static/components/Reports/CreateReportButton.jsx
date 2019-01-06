@@ -6,12 +6,26 @@ import AddIcon from '@material-ui/icons/Add';
 import Report from './Report.jsx';
 
 
+const getEmptyReport = () => ({
+    date: new Date(),
+        daysReport: [
+    ...[...Array(31)].map((_, idx) => ({
+        day: idx + 1,
+        startHour: "",
+        endHour: "",
+        amount: ""
+    }))],
+    drivingInKM: 0,
+});
+
+
 class CreateReportButton extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            creatingReport: false
+            creatingReport: false,
+            newReport: getEmptyReport()
         }
     }
 
@@ -24,7 +38,7 @@ class CreateReportButton extends React.Component {
     };
 
     render() {
-        const { creatingReport } = this.state;
+        const { creatingReport, newReport } = this.state;
 
         return (
             <div>
@@ -39,7 +53,7 @@ class CreateReportButton extends React.Component {
                 <Report
                     isOpen={creatingReport}
                     onClose={this.onClose}
-                    reportId={0}
+                    reportData={newReport}
                     editMode={true}
                 />
             </div>
