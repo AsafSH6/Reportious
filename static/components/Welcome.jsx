@@ -20,7 +20,6 @@ const styles = {
 };
 
 function Welcome({ classes, isLoggedIn }) {
-    console.log(isLoggedIn);
     return (
         <div className={classes.root}>
             <ReportiousTitle>

@@ -9,7 +9,7 @@ import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
 
 import { toFormattedDate } from '../../utils.jsx'
 import { ReportiousButton } from '../ReportiousComponents';
-import Report from './Report.jsx';
+import Report from '../../Containers/Report.jsx';
 
 
 const reportStyle = theme => ({
@@ -95,8 +95,9 @@ class ReportPreview extends React.Component {
                 <Report
                     isOpen={viewingReport}
                     onClose={this.closeViewReport}
-                    reportData={report}
+                    report={report}
                     editMode={false}
+                    isNewReport={false}
                 />
             </div>
         )

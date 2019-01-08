@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import AppBar from '@material-ui/core/AppBar';
+import {default as MaterialUIAppBar} from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
-import { ReportiousLink, ReportiousTitle } from '.';
+
+import { ReportiousLink } from './ReportiousComponents';
 
 
 const styles = {
@@ -22,10 +24,10 @@ const styles = {
     }
 };
 
-function ReportiousAppBar({ classes, title = 'Reportious' }) {
+function AppBar({ classes, title = 'Reportious' }) {
     return (
         <div className={classes.root}>
-            <AppBar
+            <MaterialUIAppBar
                 position='static'
                 color='primary'
             >
@@ -61,13 +63,13 @@ function ReportiousAppBar({ classes, title = 'Reportious' }) {
                         <AccountCircle fontSize="large" />
                     </IconButton>
                 </Toolbar>
-            </AppBar>
+            </MaterialUIAppBar>
         </div>
     );
 }
 
-ReportiousAppBar.propTypes = {
+AppBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ReportiousAppBar);
+export default withStyles(styles)(AppBar);

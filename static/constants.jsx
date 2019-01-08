@@ -1,4 +1,6 @@
 export const UPDATE_REPORTS = 'update_reports';
+export const SAVE_REPORT = 'create_report';
+export const ADD_REPORT = 'add_report';
 export const UPDATE_OPTIONS = 'update_options';
 
 export const allReportTypes = [
@@ -21,6 +23,7 @@ export const allReportTypes = [
 
 export const reports = {
     'working-hours-report': [...Array(6)].map((_ ,idx) => ({
+            id: idx,
             name: `report ${idx}`,
             date: new Date(2018, idx, idx + 1),
             daysReport: [{
@@ -29,7 +32,7 @@ export const reports = {
                 endHour: "17:00",
                 amount: 1
             },
-                ...[...Array(30)].map((_, idx) => ({
+                ...[...Array(5)].map((_, idx) => ({
                     day: idx + 1,
                     startHour: "17:00",
                     endHour: "18:00",

@@ -3,20 +3,8 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import Report from './Report.jsx';
-
-
-const getEmptyReport = () => ({
-    date: new Date(),
-        daysReport: [
-    ...[...Array(31)].map((_, idx) => ({
-        day: idx + 1,
-        startHour: "",
-        endHour: "",
-        amount: ""
-    }))],
-    drivingInKM: 0,
-});
+import Report from '../../Containers/Report.jsx';
+import { getEmptyReport } from '../../utils.jsx';
 
 
 class CreateReportButton extends React.Component {
@@ -25,16 +13,22 @@ class CreateReportButton extends React.Component {
 
         this.state = {
             creatingReport: false,
-            newReport: getEmptyReport()
+            newReport: null
         }
     }
 
     onCreateReport = () => {
-        this.setState({creatingReport: true});
+        this.setState({
+            creatingReport: true,
+            newReport: getEmptyReport()
+        });
     };
 
     onClose = () => {
-        this.setState({creatingReport: false});
+        this.setState({
+            creatingReport: false,
+            newReport: null
+        });
     };
 
     render() {
@@ -50,12 +44,16 @@ class CreateReportButton extends React.Component {
                         fontSize='default'
                     />
                 </Fab>
-                <Report
-                    isOpen={creatingReport}
-                    onClose={this.onClose}
-                    reportData={newReport}
-                    editMode={true}
-                />
+                {
+                    newReport ?
+                    (<Report
+                        isOpen={creatingReport}
+                        onClose={this.onClose}
+                        report={newReport}
+                        editMode={true}
+                        isNewReport={true} />)
+                    : null
+                }
             </div>
         )
     }

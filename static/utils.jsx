@@ -20,3 +20,14 @@ export const getHoursList = ({minHour = 8, maxHour = 19}) => {
     })
 };
 
+export const getEmptyReport = () => ({
+    date: new Date(),
+    daysReport: [
+        ...[...Array(31)].map((_, idx) => ({
+            day: idx + 1,
+            startHour: "",
+            endHour: "",
+            amount: ""
+        }))],
+    drivingInKM: 0,
+});

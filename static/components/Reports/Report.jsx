@@ -87,8 +87,9 @@ class Report extends React.Component {
         super(props);
 
         this.state = {
-            report: this.props.reportData, // Should get from this.props.reportId in ComponentDidMount by API request.
-            editMode: this.props.editMode
+            report: this.props.report, // Should get from this.props.reportId in ComponentDidMount by API request.
+            editMode: this.props.editMode,
+            isNewReport: this.props.isNewReport
         }
     }
 
@@ -178,9 +179,17 @@ class Report extends React.Component {
     };
 
     onSave = event => {
-        console.log('Save!');
+        this.props.saveReport();
         this.setState({
             editMode: false
+        })
+    };
+
+    onCreate = evemt => {
+        this.props.addReport();
+        this.setState({
+            editMode: false,
+            isNewReport: false
         })
     };
 
@@ -202,12 +211,12 @@ class Report extends React.Component {
     };
 
     render() {
-        const { report, editMode } = this.state;
-        const { classes, isOpen, onClose } = this.props;
+        const { report, editMode, isNewReport } = this.state;
+        const { classes, isOpen, onClose, downloadReport } = this.props;
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
 
-        const ReportSubjects = ['יום בחודש', 'משעה', 'עד שעה', 'מספר גנים'].map((subject, idx) => (
+        const ReportSubjects = ['מספר גנים', 'עד שעה', 'משעה', 'יום בחודש'].map((subject, idx) => (
             <Typography
                 key={`report-subject-${idx}`}
                 className={classes.reportRowItem}
@@ -357,15 +366,21 @@ class Report extends React.Component {
 
         const ActionButtons = (
             <React.Fragment>
-            {editMode === false? (
-                <Button onClick={onClose} color="primary">
+            {editMode === false ? (
+                <Button onClick={downloadReport} color="primary">
                     Download
                 </Button>)
                    : (
                <React.Fragment>
-                    <Button onClick={this.onSave} color="primary">
-                        Save
-                    </Button>
+                   {isNewReport ? (
+                           <Button onClick={this.onCreate} color="primary">
+                               Create
+                           </Button>)
+                           : (
+                           <Button onClick={this.onSave} color="primary">
+                                Save
+                           </Button>)
+                   }
                     <Button onClick={this.onCancel} color="primary">
                         Cancel
                     </Button>

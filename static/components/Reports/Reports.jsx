@@ -2,7 +2,6 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { reportTypeToPreview } from '../../constants.jsx'
 import { ReportiousTitle } from '../ReportiousComponents';
 import ReportPreview from './ReportPreview.jsx';
 import CreateReportButton from './CreateReportButton.jsx';
@@ -52,8 +51,7 @@ class Reports extends React.Component {
     indexToColor = index => this.props.colors(index).hex();
 
     render() {
-        const { classes, match, reports } = this.props;
-        const { viewingReportId } = match.params;
+        const { classes, reports, viewingReportId } = this.props;
 
         return (
             <div className={classes.root}>
@@ -75,7 +73,7 @@ class Reports extends React.Component {
                     <div
                         className={classes.createReport}
                     >
-                        <CreateReportButton/>
+                        <CreateReportButton />
                     </div>
                 </div>
             </div>

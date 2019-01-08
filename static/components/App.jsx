@@ -1,18 +1,26 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch
+} from 'react-router-dom';
 
-import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import {
+    MuiThemeProvider,
+    createMuiTheme,
+    withStyles
+} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { ReportiousAppBar } from './ReportiousComponents'
+import AppBar from './AppBar.jsx'
 import NotFound from './NotFound.jsx'
 
 import {
     Welcome,
     Options,
     Reports,
-} from '../pages';
+} from '../Containers';
 
 
 // A theme with custom primary and secondary color.
@@ -51,7 +59,7 @@ function App({ classes }) {
             <MuiThemeProvider theme={theme} >
                 <CssBaseline/>
                 <div className={classes.root}>
-                    <ReportiousAppBar/>
+                    <AppBar/>
 
                     <Switch>
                         <Route
