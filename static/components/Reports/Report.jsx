@@ -172,6 +172,13 @@ class Report extends React.Component {
         })
     };
 
+    onClose = event => {
+        this.props.onClose(event);
+        this.setState({
+            editMode: false
+        })
+    };
+
     onCancel = event => {
         this.setState({
             editMode: false
@@ -179,14 +186,14 @@ class Report extends React.Component {
     };
 
     onSave = event => {
-        this.props.saveReport();
+        this.props.saveReport(event);
         this.setState({
             editMode: false
         })
     };
 
     onCreate = evemt => {
-        this.props.addReport();
+        this.props.addReport(event);
         this.setState({
             editMode: false,
             isNewReport: false
@@ -212,7 +219,7 @@ class Report extends React.Component {
 
     render() {
         const { report, editMode, isNewReport } = this.state;
-        const { classes, isOpen, onClose, downloadReport } = this.props;
+        const { classes, isOpen, downloadReport } = this.props;
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
 
@@ -338,7 +345,7 @@ class Report extends React.Component {
 
         const Close = (
             (<IconButton
-                onClick={onClose}
+                onClick={this.onClose}
                 className={classes.close}
             >
                 <Cancel/>
@@ -394,7 +401,7 @@ class Report extends React.Component {
             <div>
                 <Dialog
                     open={isOpen}
-                    onClose={onClose}
+                    onClose={this.onClose}
                     aria-labelledby="form-dialog-title"
                     className={classes.root}
                 >

@@ -3,6 +3,7 @@ import {
     UPDATE_OPTIONS,
     SAVE_REPORT,
     ADD_REPORT,
+    LOGGED_IN
 } from '../constants.jsx';
 
 
@@ -27,4 +28,8 @@ export const saveReport = report => ({
 export const addReport = report => ({
     type: ADD_REPORT,
     report
+});
+
+export const loggedIn = () => ({
+    type: LOGGED_IN,
 });

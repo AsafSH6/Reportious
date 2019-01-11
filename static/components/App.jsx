@@ -3,7 +3,8 @@ import React from 'react';
 import {
     BrowserRouter as Router,
     Route,
-    Switch
+    Switch,
+    Redirect,
 } from 'react-router-dom';
 
 import {
@@ -53,22 +54,22 @@ const styles = {
 };
 
 
-function App({ classes }) {
+function App({ classes, isLoggedIn }) {
     return (
         <Router>
             <MuiThemeProvider theme={theme} >
                 <CssBaseline/>
                 <div className={classes.root}>
-                    <AppBar/>
+                    {isLoggedIn && <AppBar className={'animated fadeInDown'}/>}
 
                     <Switch>
                         <Route
                             exact path='/'
-                            component={Welcome}
+                            component={Options}
                         />
                         <Route
-                            path='/options/'
-                            component={Options}
+                            path='/welcome'
+                            component={Welcome}
                         />
                         <Route
                             path='/reports/:reportType/:viewingReportId?'
@@ -78,6 +79,7 @@ function App({ classes }) {
                             component={NotFound}
                         />
                     </Switch>
+                    {isLoggedIn === false && <Redirect to='/welcome/'/>}
                 </div>
             </MuiThemeProvider>
         </Router>

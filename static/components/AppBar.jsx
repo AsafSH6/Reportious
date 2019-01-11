@@ -13,9 +13,6 @@ import { ReportiousLink } from './ReportiousComponents';
 
 
 const styles = {
-    root: {
-
-    },
     toolBar: {
         margin: '0vw 5vw',
     },
@@ -24,9 +21,9 @@ const styles = {
     }
 };
 
-function AppBar({ classes, title = 'Reportious' }) {
+function AppBar({ classes, ...passThroughProps }) {
     return (
-        <div className={classes.root}>
+        <div {...passThroughProps}>
             <MaterialUIAppBar
                 position='static'
                 color='primary'
@@ -53,7 +50,7 @@ function AppBar({ classes, title = 'Reportious' }) {
                                 variant='h5'
                                 color='inherit'
                             >
-                                <b> {title} </b>
+                                <b> Reportious </b>
                             </Typography>
                         </ReportiousLink>
                     </div>

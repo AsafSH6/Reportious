@@ -2,16 +2,17 @@ export const UPDATE_REPORTS = 'update_reports';
 export const SAVE_REPORT = 'create_report';
 export const ADD_REPORT = 'add_report';
 export const UPDATE_OPTIONS = 'update_options';
+export const LOGGED_IN = 'logged_in';
 
 export const allReportTypes = [
     {
-        name: 'Working Hours Report',
-        type: 'working-hours-report',
+        name: 'Coming Soon 1',
+        type: 'coming-soon-1',
         img: '/images/backgroundpic.jpg'
     },
     {
-        name: 'Coming Soon 1',
-        type: 'coming-soon-1',
+        name: 'Working Hours Report',
+        type: 'working-hours-report',
         img: '/images/backgroundpic.jpg'
     },
     {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ClassNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -9,7 +10,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 import {
-    ReportiousTitle,
     ReportiousLink
 } from './ReportiousComponents';
 
@@ -29,35 +29,44 @@ const optionStyles = {
 };
 
 
-const ReportOption = withStyles(optionStyles)(({ classes, className, reportType }) => {
-    return (
-        <div className={className}>
-            <ReportiousLink
-                useButton={false}
-                to={`/reports/${reportType.type}/`}
-            >
-                <Card className={classes.card}>
-                    <CardActionArea>
-                        <CardMedia
-                            className={classes.media}
-                            image={reportType.img}
-                        />
-                        <CardContent
-                            className={classes.content}
-                        >
-                            <Typography
-                                variant="subtitle1"
-                                color="secondary"
+@withStyles(optionStyles)
+class ReportOption extends React.PureComponent {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { classes, reportType, ...passThroughProps } = this.props;
+
+        return (
+            <div {...passThroughProps}>
+                <ReportiousLink
+                    useButton={false}
+                    to={`/reports/${reportType.type}/`}
+                >
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardMedia
+                                className={classes.media}
+                                image={reportType.img}
+                            />
+                            <CardContent
+                                className={classes.content}
                             >
-                                <strong>{reportType.name}</strong>
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
-            </ReportiousLink>
-        </div>
-    )
-});
+                                <Typography
+                                    variant="subtitle1"
+                                    color="secondary"
+                                >
+                                    <strong>{reportType.name}</strong>
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </ReportiousLink>
+            </div>
+        )
+    }
+}
 
 
 const optionMenuStyles = theme => ({
@@ -92,15 +101,15 @@ class OptionsMenu extends React.Component {
     render() {
         const { classes, reportOptions } = this.props;
         return (
-            <div className={classes.root}>
-                <ReportiousTitle>
-                    Options
-                </ReportiousTitle>
+            <div className={ClassNames(classes.root)}>
                 <div className={classes.options}>
-                    {reportOptions.map(reportType => (
+                    {reportOptions.map((reportType, idx) => (
                         <ReportOption
                             key={reportType.name}
-                            className={classes.option}
+                            className={ClassNames(classes.option, 'animated zoomIn')}
+                            style={{
+                                animationDelay: `${1 + idx * 0.5}s`
+                            }}
                             reportType={reportType}
                         />
                     ))}

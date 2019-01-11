@@ -1,8 +1,7 @@
 import React from 'react';
-
+import ClassNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
-import { ReportiousTitle } from '../ReportiousComponents';
 import ReportPreview from './ReportPreview.jsx';
 import CreateReportButton from './CreateReportButton.jsx';
 
@@ -12,7 +11,8 @@ const reportsPreviewStyle = theme => ({
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        overflow: 'hidden'
     },
     content: {
         flex: 1,
@@ -55,23 +55,26 @@ class Reports extends React.Component {
 
         return (
             <div className={classes.root}>
-                <ReportiousTitle>
-                    Preview
-                </ReportiousTitle>
                 <div className={classes.content}>
                     <div className={classes.preview}>
                         {reports.map((report, idx) => (
                             <ReportPreview
                                 key={`report-preview-${idx}`}
-                                className={classes.reportPreview}
+                                className={ClassNames(classes.reportPreview, 'animated rotateInUpLeft')}
+                                style={{
+                                    animationDelay: `${idx * 0.2}s`
+                                }}
                                 report={report}
-                                viewingReport={viewingReportId === String(report.id)}
+                                alreadyViewingReport={viewingReportId === String(report.id)}
                                 backgroundColor={this.indexToColor(idx)}
                             />
                         ))}
                     </div>
                     <div
-                        className={classes.createReport}
+                        className={ClassNames(classes.createReport, 'animated flipInX')}
+                        style={{
+                            animationDelay: `${reports.length * 0.2 + 0.5}s`
+                        }}
                     >
                         <CreateReportButton />
                     </div>

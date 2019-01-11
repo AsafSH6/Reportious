@@ -37,7 +37,7 @@ class ReportPreview extends React.Component {
         super(props);
 
         this.state = {
-            viewingReport: this.props.viewingReport
+            viewingReport: this.props.alreadyViewingReport
         };
     }
 
@@ -51,15 +51,15 @@ class ReportPreview extends React.Component {
 
     render() {
         const { viewingReport } = this.state;
-        const { classes, className, report, backgroundColor } = this.props;
+        const { classes, report, backgroundColor, alreadyViewingReport, ...passThroughProps } = this.props;
 
         return (
             <div>
                 <ReportiousButton
                     key={report.name}
-                    className={className}
                     variant='text'
                     onClick={this.openViewReport}
+                    {...passThroughProps}
                 >
                     <Paper
                         elevation={1}
