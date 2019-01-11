@@ -20,7 +20,7 @@ import {
     Welcome,
     Options,
     Reports,
-} from '../Containers';
+} from '../containers';
 
 
 // A theme with custom primary and secondary color.

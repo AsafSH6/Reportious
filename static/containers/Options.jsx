@@ -5,7 +5,7 @@ import {
     updateOptions,
 } from "../actions";
 
-import reportsService from '../Services/Reports.jsx';
+import reportsService from '../services/Reports.jsx';
 
 
 const mapStateToProps = state => ({

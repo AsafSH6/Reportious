@@ -3,7 +3,7 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import Report from '../../Containers/Report.jsx';
+import Report from '../../containers/Report.jsx';
 import { getEmptyReport } from '../../utils.jsx';
 
 

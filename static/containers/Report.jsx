@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { ReportsService } from '../Services';
+import { ReportsService } from '../services';
 import Report from '../components/Reports/Report.jsx';
 import {
     saveReport,

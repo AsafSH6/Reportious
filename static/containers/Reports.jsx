@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { updateReports } from "../actions";
 import { Reports } from '../components/Reports';
-import reportsService from '../Services/Reports.jsx';
+import reportsService from '../services/Reports.jsx';
 import chroma from "chroma-js";
 
 

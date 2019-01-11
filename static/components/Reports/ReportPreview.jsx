@@ -9,7 +9,7 @@ import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
 
 import { toFormattedDate } from '../../utils.jsx'
 import { ReportiousButton } from '../ReportiousComponents';
-import Report from '../../Containers/Report.jsx';
+import Report from '../../containers/Report.jsx';
 
 
 const reportStyle = theme => ({
