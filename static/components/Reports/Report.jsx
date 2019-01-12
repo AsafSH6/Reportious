@@ -18,11 +18,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/EditRounded';
 import Cancel from '@material-ui/icons/CancelRounded';
 
-import { toFormattedDate, getHoursList} from '../../utils.jsx'
+import {
+    toFormattedDate,
+    getHoursList,
+    getTotalWorkingHours
+} from '../../utils.jsx'
 import NumberFormatTextField from '../NumberFormatTextField.jsx'
 
-
-const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 
 const styles = theme => ({
     root: {
@@ -202,19 +204,7 @@ class Report extends React.Component {
 
     getTotalWorkingHours = () => {
         const { report } = this.state;
-        const reducer = (sum, dayReport) => {
-            const startHour = Date.parse(`01 Jan 1970 ${dayReport.startHour}:00 GMT`);
-            const endHour = Date.parse(`01 Jan 1970 ${dayReport.endHour}:00 GMT`);
-            if(startHour && endHour && endHour > startHour) {  // Invalid day report.
-                const dayWorkingHours = endHour - startHour;
-                return sum + dayWorkingHours;
-            }
-            else {
-                return sum;
-            }
-        };
-
-        return (report.daysReport.reduce(reducer, 0) / HOUR_IN_MILLISECONDS);
+        return getTotalWorkingHours(report);
     };
 
     render() {

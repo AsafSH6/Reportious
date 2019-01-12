@@ -31,3 +31,21 @@ export const getEmptyReport = () => ({
         }))],
     drivingInKM: 0,
 });
+
+export const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
+
+export const getTotalWorkingHours = report => {
+    const reducer = (sum, dayReport) => {
+        const startHour = Date.parse(`01 Jan 1970 ${dayReport.startHour}:00 GMT`);
+        const endHour = Date.parse(`01 Jan 1970 ${dayReport.endHour}:00 GMT`);
+        if(startHour && endHour && endHour > startHour) {  // Invalid day report.
+            const dayWorkingHours = endHour - startHour;
+            return sum + dayWorkingHours;
+        }
+        else {
+            return sum;
+        }
+    };
+
+    return (report.daysReport.reduce(reducer, 0) / HOUR_IN_MILLISECONDS);
+};

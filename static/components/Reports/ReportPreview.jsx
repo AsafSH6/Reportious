@@ -10,6 +10,7 @@ import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
 import { toFormattedDate } from '../../utils.jsx'
 import { ReportiousButton } from '../ReportiousComponents';
 import Report from '../../containers/Report.jsx';
+import {getTotalWorkingHours} from "../../utils";
 
 
 const reportStyle = theme => ({
@@ -68,7 +69,7 @@ class ReportPreview extends React.Component {
                         <Typography
                             variant='subtitle1'
                             color='secondary'>
-                            {`${report.name}`}
+                            {toFormattedDate(report.date)}
                             <Avatar
                                 alt="Remy Sharp"
                                 className={classes.avatar}
@@ -86,8 +87,9 @@ class ReportPreview extends React.Component {
                             <Typography
                                 variant='body1'
                                 color='primary'
+                                style={{direction: 'rtl'}}
                             >
-                                {toFormattedDate(report.date)}
+                                {`סה"כ ${getTotalWorkingHours(report)} שעות עבודה`}
                             </Typography>
                         </div>
                     </Paper>
