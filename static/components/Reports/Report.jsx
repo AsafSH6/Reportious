@@ -89,7 +89,7 @@ class Report extends React.Component {
         super(props);
 
         this.state = {
-            report: this.props.report, // Should get from this.props.reportId in ComponentDidMount by API request.
+            report: this.props.report,
             editMode: this.props.editMode,
             isNewReport: this.props.isNewReport
         }
@@ -98,18 +98,18 @@ class Report extends React.Component {
     onStartHourChange = idx => event => {
         this.setState(prevState => {
             const { report } = prevState;
-            const daysReport = report.daysReport;
+            const daysReport = [...report.daysReport];
             const changedDayReport = daysReport[idx];
 
             daysReport[idx] = {
                 ...changedDayReport,
-                'startHour': event.target.value
+                startHour: event.target.value
             };
 
             return {
                 report: {
                     ...report,
-                    daysReport: [...daysReport]
+                    daysReport: daysReport
                 }
             }
         })
@@ -118,18 +118,18 @@ class Report extends React.Component {
     onEndHourChange = idx => event => {
         this.setState(prevState => {
             const { report } = prevState;
-            const daysReport = report.daysReport;
+            const daysReport = [...report.daysReport];
             const changedDayReport = daysReport[idx];
 
             daysReport[idx] = {
                 ...changedDayReport,
-                'endHour': event.target.value
+                endHour: event.target.value
             };
 
             return {
                 report: {
                     ...report,
-                    daysReport: [...daysReport]
+                    daysReport: daysReport
                 }
             }
         })
@@ -143,7 +143,7 @@ class Report extends React.Component {
 
             daysReport[idx] = {
                 ...changedDayReport,
-                'amount': event.target.value
+                amount: event.target.value
             };
 
             return {
@@ -188,14 +188,18 @@ class Report extends React.Component {
     };
 
     onSave = event => {
-        this.props.saveReport(event);
+        const { report } = this.state;
+
+        this.props.saveReport(report);
         this.setState({
             editMode: false
         })
     };
 
-    onCreate = evemt => {
-        this.props.addReport(event);
+    onCreate = event => {
+        const { report } = this.state;
+
+        this.props.addReport(report);
         this.setState({
             editMode: false,
             isNewReport: false

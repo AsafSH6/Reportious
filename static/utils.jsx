@@ -20,8 +20,8 @@ export const getHoursList = ({minHour = 8, maxHour = 19}) => {
     })
 };
 
-export const getEmptyReport = () => ({
-    date: new Date(),
+export const getEmptyReport = (date = null) => ({
+    date: date || new Date(),
     daysReport: [
         ...[...Array(31)].map((_, idx) => ({
             day: idx + 1,
@@ -49,3 +49,6 @@ export const getTotalWorkingHours = report => {
 
     return (report.daysReport.reduce(reducer, 0) / HOUR_IN_MILLISECONDS);
 };
+
+export const MONTHS_LIST = moment.months();
+export const YEAR_LIST = [...Array(4)].map((_, idx) => 2017 + idx);

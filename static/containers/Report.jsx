@@ -13,14 +13,12 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    saveReport: () => {
-        const { report } = ownProps;
+const mapDispatchToProps = dispatch => ({
+    saveReport: report => {
         ReportsService.saveReport(report);
         dispatch(saveReport(report))
     },
-    addReport: () => {
-        const { report } = ownProps;
+    addReport: report => {
         ReportsService.addReport(report);
         dispatch(addReport(report))
     }
