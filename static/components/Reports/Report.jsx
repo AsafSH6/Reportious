@@ -90,8 +90,9 @@ class Report extends React.Component {
 
         this.state = {
             report: this.props.report,
+            originalReport: _.cloneDeep(this.props.report),
             editMode: this.props.editMode,
-            isNewReport: this.props.isNewReport
+            isNewReport: this.props.isNewReport,
         }
     }
 
@@ -176,15 +177,23 @@ class Report extends React.Component {
 
     onClose = event => {
         this.props.onClose(event);
-        this.setState({
-            editMode: false
-        })
+        this.setState(prevState => ({
+            editMode: false,
+            report: prevState.originalReport,
+        }))
+    };
+
+    onClickAway = event => {
+        if (this.state.editMode === false) {
+            return this.onClose(event);
+        }
     };
 
     onCancel = event => {
-        this.setState({
-            editMode: false
-        })
+        this.setState(prevState => ({
+            editMode: false,
+            report: prevState.originalReport
+        }))
     };
 
     onSave = event => {
@@ -192,7 +201,8 @@ class Report extends React.Component {
 
         this.props.saveReport(report);
         this.setState({
-            editMode: false
+            editMode: false,
+            originalReport: report,
         })
     };
 
@@ -202,7 +212,8 @@ class Report extends React.Component {
         this.props.addReport(report);
         this.setState({
             editMode: false,
-            isNewReport: false
+            isNewReport: false,
+            originalReport: report,
         })
     };
 
@@ -395,7 +406,7 @@ class Report extends React.Component {
             <div>
                 <Dialog
                     open={isOpen}
-                    onClose={this.onClose}
+                    onClose={this.onClickAway}
                     aria-labelledby="form-dialog-title"
                     className={classes.root}
                 >
