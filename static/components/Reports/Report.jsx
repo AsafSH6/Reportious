@@ -382,7 +382,7 @@ class Report extends React.Component {
                                 Save
                            </Button>)
                    }
-                    <Button onClick={this.onCancel} color="primary">
+                    <Button onClick={isNewReport ? this.onClose : this.onCancel} color="primary">
                         Cancel
                     </Button>
                </React.Fragment>
