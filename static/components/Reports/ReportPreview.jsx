@@ -14,22 +14,54 @@ import {getTotalWorkingHours} from "../../utils";
 
 
 const reportStyle = theme => ({
-    root: {
+    paper: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         width: 170,
+        [theme.breakpoints.down('md')]: {
+            width: '100%',
+            height: '100%',
+        }
+    },
+    title: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        [theme.breakpoints.down('md')]: {
+            fontSize: 45
+        }
     },
     avatar: {
         margin: theme.spacing.unit,
         width: 100,
         height: 100,
+        [theme.breakpoints.down('md')]: {
+            width: 200,
+            height: 200,
+        }
+    },
+    avatarIcon: {
+        color: 'white',
+        fontSize: 60,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 130,
+        }
     },
     divider: {
         width: '90%'
     },
     content: {
         margin: theme.spacing.unit * 2,
+    },
+    workingHours: {
+        direction: 'rtl',
+        textAlign: 'center',
+        [theme.breakpoints.down('md')]: {
+            fontSize: 30,
+        }
     },
 });
 
@@ -55,45 +87,43 @@ class ReportPreview extends React.Component {
         const { classes, report, backgroundColor, alreadyViewingReport, ...passThroughProps } = this.props;
 
         return (
-            <div>
-                <ReportiousButton
-                    key={report.name}
-                    variant='text'
+            <div
+                {...passThroughProps}
+            >
+                <Paper
+                    elevation={1}
+                    className={classes.paper}
                     onClick={this.openViewReport}
-                    {...passThroughProps}
                 >
-                    <Paper
-                        elevation={1}
-                        className={classes.root}
+                    <Typography
+                        className={classes.title}
+                        variant='subtitle1'
+                        color='secondary'
+                    >
+                        {toFormattedDate(report.date)}
+                        <Avatar
+                            alt="Remy Sharp"
+                            className={classes.avatar}
+                            style={{background: backgroundColor}}
+                        >
+                            <FormatAlignLeft
+                                className={classes.avatarIcon}
+                            />
+                        </Avatar>
+                    </Typography>
+                    <Divider className={classes.divider}/>
+                    <div
+                        className={classes.content}
                     >
                         <Typography
-                            variant='subtitle1'
-                            color='secondary'>
-                            {toFormattedDate(report.date)}
-                            <Avatar
-                                alt="Remy Sharp"
-                                className={classes.avatar}
-                                style={{background: backgroundColor}}
-                            >
-                                <FormatAlignLeft
-                                    style={{fontSize: 60, color: "white"}}
-                                />
-                            </Avatar>
-                        </Typography>
-                        <Divider className={classes.divider}/>
-                        <div
-                            className={classes.content}
+                            className={classes.workingHours}
+                            variant='body1'
+                            color='primary'
                         >
-                            <Typography
-                                variant='body1'
-                                color='primary'
-                                style={{direction: 'rtl'}}
-                            >
-                                {`סה"כ ${getTotalWorkingHours(report)} שעות עבודה`}
-                            </Typography>
-                        </div>
-                    </Paper>
-                </ReportiousButton>
+                            {`סה"כ ${getTotalWorkingHours(report)} שעות עבודה`}
+                        </Typography>
+                    </div>
+                </Paper>
                 <Report
                     isOpen={viewingReport}
                     onClose={this.closeViewReport}

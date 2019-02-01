@@ -23,7 +23,7 @@ export const allReportTypes = [
 ];
 
 export const reports = {
-    'working-hours-report': [...Array(6)].map((_ ,idx) => ({
+    'working-hours-report': [...Array(10)].map((_ ,idx) => ({
             id: idx,
             name: `report ${idx}`,
             date: new Date(2018, idx, idx + 1),
@@ -41,7 +41,7 @@ export const reports = {
             }))],
             drivingInKM: 10 * idx,
         })
-    ),
+    ).reverse(),
     'coming-soon-1': [],
     'coming-soon-2': [],
 };

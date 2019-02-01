@@ -19,6 +19,7 @@ const reportsPreviewStyle = theme => ({
         margin: theme.spacing.unit * 4,
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'space-between',
     },
     preview: {
         flex: 1,
@@ -28,8 +29,22 @@ const reportsPreviewStyle = theme => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    reportsPreview: {
+        flex: 1,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+    },
     reportPreview: {
         margin: theme.spacing.unit * 2,
+        [theme.breakpoints.down('md')]: {
+            minWidth: 303,
+            minHeight: 390
+        }
     },
     createReport: {
         width: '100%',
@@ -57,18 +72,20 @@ class Reports extends React.Component {
             <div className={classes.root}>
                 <div className={classes.content}>
                     <div className={classes.preview}>
-                        {reports.map((report, idx) => (
-                            <ReportPreview
-                                key={`report-preview-${idx}`}
-                                className={ClassNames(classes.reportPreview, 'animated rotateInUpLeft')}
-                                style={{
-                                    animationDelay: `${idx * 0.2}s`
-                                }}
-                                report={report}
-                                alreadyViewingReport={viewingReportId === String(report.id)}
-                                backgroundColor={this.indexToColor(idx)}
-                            />
-                        ))}
+                        <div className={classes.reportsPreview}>
+                            {reports.map((report, idx) => (
+                                <ReportPreview
+                                    key={`report-preview-${idx}`}
+                                    className={ClassNames(classes.reportPreview, 'animated rotateInUpLeft')}
+                                    style={{
+                                        animationDelay: `${idx * 0.2}s`
+                                    }}
+                                    report={report}
+                                    alreadyViewingReport={viewingReportId === String(report.id)}
+                                    backgroundColor={this.indexToColor(idx)}
+                                />
+                            ))}
+                        </div>
                     </div>
                     <div
                         className={ClassNames(classes.createReport, 'animated flipInX')}
