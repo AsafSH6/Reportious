@@ -12,14 +12,19 @@ import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import { ReportiousLink } from './ReportiousComponents';
 
 
-const styles = {
+const styles = theme => ({
     toolBar: {
         margin: '0vw 5vw',
     },
     reportiousIcon: {
         flexGrow: 1,
+    },
+    element: {
+        [theme.breakpoints.down('md')]: {
+            fontSize: 55
+        }
     }
-};
+});
 
 function AppBar({ classes, ...passThroughProps }) {
     return (
@@ -44,11 +49,13 @@ function AppBar({ classes, ...passThroughProps }) {
                             }}
                         >
                             <LibraryBooks
-                                fontSize='large'
+                                fontSize="large"
+                                className={classes.element}
                             />
                             <Typography
                                 variant='h5'
                                 color='inherit'
+                                className={classes.element}
                             >
                                 <b> Reportious </b>
                             </Typography>
@@ -57,7 +64,10 @@ function AppBar({ classes, ...passThroughProps }) {
                     <IconButton
                         color="inherit"
                     >
-                        <AccountCircle fontSize="large" />
+                        <AccountCircle
+                            fontSize="large"
+                            className={classes.element}
+                        />
                     </IconButton>
                 </Toolbar>
             </MaterialUIAppBar>

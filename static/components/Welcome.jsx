@@ -22,7 +22,7 @@ const styles = theme => ({
         flexDirection: 'column',
         backgroundImage: 'url("/images/bodybackground.jpg")',
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
     },
     top: {
         display: 'flex',
@@ -38,7 +38,10 @@ const styles = theme => ({
         justifyContent: 'center',
     },
     element: {
-        color: 'white'
+        color: 'white',
+        [theme.breakpoints.down('md')]: {
+            fontSize: '3rem'
+        }
     },
 });
 

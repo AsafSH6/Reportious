@@ -39,7 +39,6 @@ const theme = createMuiTheme({
     typography: {
         useNextVariants: true,
         fontFamily: "Roboto, Helvetica Neue, Helvetica, Arial,sans-serif",
-        fontSize: 18,
     },
 });
 
