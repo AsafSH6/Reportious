@@ -67,6 +67,8 @@ class Reports extends React.Component {
 
     render() {
         const { classes, reports, viewingReportId } = this.props;
+        console.log('num of reports', reports.length);
+        console.log('first report', reports[0]);
 
         return (
             <div className={classes.root}>
@@ -75,7 +77,7 @@ class Reports extends React.Component {
                         <div className={classes.reportsPreview}>
                             {reports.map((report, idx) => (
                                 <ReportPreview
-                                    key={`report-preview-${idx}`}
+                                    key={`report-preview-${report.id}`}
                                     className={ClassNames(classes.reportPreview, 'animated rotateInUpLeft')}
                                     style={{
                                         animationDelay: `${idx * 0.2}s`

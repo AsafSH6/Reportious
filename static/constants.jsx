@@ -1,6 +1,10 @@
+export const UPDATE_DAY_START_HOUR = 'update_day_start_hour';
+export const UPDATE_DAY_END_HOUR = 'update_day_end_hour';
+export const UPDATE_DAY_AMOUNT = 'update_day_amount';
+export const UPDATE_DRIVING_KM = 'update_driving_km';
 export const UPDATE_REPORTS = 'update_reports';
-export const SAVE_REPORT = 'create_report';
-export const ADD_REPORT = 'add_report';
+export const SAVE_REPORT = 'save_report';
+export const CREATE_REPORT = 'create_report';
 export const UPDATE_OPTIONS = 'update_options';
 export const LOGGED_IN = 'logged_in';
 

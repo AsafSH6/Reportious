@@ -1,7 +1,7 @@
 import {
     UPDATE_REPORTS,
     SAVE_REPORT,
-    ADD_REPORT,
+    CREATE_REPORT,
 } from  '../constants.jsx';
 
 
@@ -13,20 +13,21 @@ export default (state = initialState, action) => {
             return action.reports;
         case SAVE_REPORT:
             return state.map(report => {
-                if (report.id === action.report) {
+                if (report.id === action.report.id) {
+                    console.log('updated report', action.report)
                     return action.report;
                 }
                 else {
                     return report;
                 }
             });
-        case ADD_REPORT:
+        case CREATE_REPORT:
             // ********************************************************************************
             // WILL BE REMOVED ONCE WE CREATE REAL SERVER.
             action.report.id = Math.max(...state.map(report => report.id)) + 1;
             action.report.name = `report ${action.report.id}`;
             // ********************************************************************************
-            return [...state, action.report];
+            return [action.report, ...state];
         default:
             return state;
     }

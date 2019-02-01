@@ -2,7 +2,7 @@ import {
     UPDATE_REPORTS,
     UPDATE_OPTIONS,
     SAVE_REPORT,
-    ADD_REPORT,
+    CREATE_REPORT,
     LOGGED_IN
 } from '../constants.jsx';
 
@@ -25,8 +25,8 @@ export const saveReport = report => ({
 });
 
 
-export const addReport = report => ({
-    type: ADD_REPORT,
+export const createReport = report => ({
+    type: CREATE_REPORT,
     report
 });
 

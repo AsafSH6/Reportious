@@ -6,8 +6,8 @@ import {
 class ReportsService {
     loadReports = reportType => reports[reportType];
     loadOptions = () => allReportTypes;
-    saveReport = report => console.log('Saving report', report);
-    addReport = report => console.log('Adding report', report);
+    saveReport = report => new Promise((resolve, reject) => {console.log('Saving report', report); resolve(report)});
+    createReport = report => new Promise((resolve, reject) => {console.log('Creating report', report); resolve(report)});
     downloadReport = reportId => console.log('Downloading report', reportId);
 }
 

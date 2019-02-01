@@ -89,8 +89,7 @@ class Report extends React.Component {
         super(props);
 
         this.state = {
-            report: this.props.report,
-            originalReport: _.cloneDeep(this.props.report),
+            editedReport: _.cloneDeep(this.props.report),
             editMode: this.props.editMode,
             isNewReport: this.props.isNewReport,
         }
@@ -98,8 +97,8 @@ class Report extends React.Component {
 
     onStartHourChange = idx => event => {
         this.setState(prevState => {
-            const { report } = prevState;
-            const daysReport = [...report.daysReport];
+            const { editedReport } = prevState;
+            const daysReport = [...editedReport.daysReport];
             const changedDayReport = daysReport[idx];
 
             daysReport[idx] = {
@@ -108,8 +107,8 @@ class Report extends React.Component {
             };
 
             return {
-                report: {
-                    ...report,
+                editedReport: {
+                    ...editedReport,
                     daysReport: daysReport
                 }
             }
@@ -118,8 +117,8 @@ class Report extends React.Component {
 
     onEndHourChange = idx => event => {
         this.setState(prevState => {
-            const { report } = prevState;
-            const daysReport = [...report.daysReport];
+            const { editedReport } = prevState;
+            const daysReport = [...editedReport.daysReport];
             const changedDayReport = daysReport[idx];
 
             daysReport[idx] = {
@@ -128,8 +127,8 @@ class Report extends React.Component {
             };
 
             return {
-                report: {
-                    ...report,
+                editedReport: {
+                    ...editedReport,
                     daysReport: daysReport
                 }
             }
@@ -138,8 +137,8 @@ class Report extends React.Component {
 
     onAmountChange = idx => event => {
         this.setState(prevState => {
-            const { report } = prevState;
-            const daysReport = report.daysReport;
+            const { editedReport } = prevState;
+            const daysReport = editedReport.daysReport;
             const changedDayReport = daysReport[idx];
 
             daysReport[idx] = {
@@ -148,8 +147,8 @@ class Report extends React.Component {
             };
 
             return {
-                report: {
-                    ...report,
+                editedReport: {
+                    ...editedReport,
                     daysReport: [...daysReport]
                 }
             }
@@ -158,11 +157,11 @@ class Report extends React.Component {
 
     onDrivingKMChange = event => {
         this.setState(prevState => {
-            const { report } = prevState;
+            const { editedReport } = prevState;
 
             return {
-                report: {
-                    ...report,
+                editedReport: {
+                    ...editedReport,
                     drivingInKM: event.target.value
                 }
             }
@@ -177,49 +176,53 @@ class Report extends React.Component {
 
     onClose = event => {
         this.props.onClose(event);
-        this.setState(prevState => ({
+        this.setState({
             editMode: false,
-            report: prevState.originalReport,
-        }))
+            report: this.props.report,
+        })
     };
 
     onClickAway = event => {
+        // Exit page on click away only if not in edit mode.
         if (this.state.editMode === false) {
             return this.onClose(event);
         }
     };
 
     onCancel = event => {
-        this.setState(prevState => ({
+        this.setState({
             editMode: false,
-            report: prevState.originalReport
-        }))
+            report: this.props.report
+        })
     };
 
     onSave = event => {
-        const { report } = this.state;
+        const { editedReport } = this.state;
 
-        this.props.saveReport(report);
-        this.setState({
-            editMode: false,
-            originalReport: report,
-        })
+        console.log('onSave report', editedReport);
+        this.props.saveReport(editedReport).then(savedReport => {
+            this.setState({
+                editedReport: _.cloneDeep(savedReport),
+                editMode: false,
+            })
+        });
     };
 
     onCreate = event => {
-        const { report } = this.state;
+        const { editedReport } = this.state;
 
-        this.props.addReport(report);
-        this.setState({
-            editMode: false,
-            isNewReport: false,
-            originalReport: report,
-        })
+        this.props.createReport(editedReport).then(createdReport => {
+            this.setState({
+                editedReport: _.cloneDeep(createdReport),
+                editMode: false,
+                isNewReport: false,
+            })
+        });
     };
 
     getTotalWorkingHours = () => {
-        const { report } = this.state;
-        return getTotalWorkingHours(report);
+        const { editedReport } = this.state;
+        return getTotalWorkingHours(editedReport);
     };
 
     render() {
@@ -227,7 +230,7 @@ class Report extends React.Component {
         const { classes, isOpen, downloadReport } = this.props;
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
-
+        console.log('report', this.props.report);
         const ReportSubjects = ['מספר גנים', 'עד שעה', 'משעה', 'יום בחודש'].map((subject, idx) => (
             <Typography
                 key={`report-subject-${idx}`}
@@ -401,7 +404,9 @@ class Report extends React.Component {
             }
             </React.Fragment>
         );
-
+        if (isOpen){
+            console.log('opened report', report);
+        }
         return (
             <div>
                 <Dialog

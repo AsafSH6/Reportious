@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
 
 import { toFormattedDate } from '../../utils.jsx'
-import { ReportiousButton } from '../ReportiousComponents';
 import Report from '../../containers/Report.jsx';
 import {getTotalWorkingHours} from "../../utils";
 

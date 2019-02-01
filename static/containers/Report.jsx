@@ -4,7 +4,7 @@ import { ReportsService } from '../services';
 import Report from '../components/Reports/Report.jsx';
 import {
     saveReport,
-    addReport
+    createReport
 } from "../actions";
 
 
@@ -15,12 +15,16 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
     saveReport: report => {
-        ReportsService.saveReport(report);
-        dispatch(saveReport(report))
+        return ReportsService.saveReport(report).then(savedReport => {
+            dispatch(saveReport(savedReport));
+            return savedReport;
+        });
     },
-    addReport: report => {
-        ReportsService.addReport(report);
-        dispatch(addReport(report))
+    createReport: report => {
+        return ReportsService.createReport(report).then(createdReport => {
+            dispatch(createReport(createdReport));
+            return createdReport;
+        });
     }
 });
 
