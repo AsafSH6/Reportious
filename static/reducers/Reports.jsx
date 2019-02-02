@@ -14,7 +14,6 @@ export default (state = initialState, action) => {
         case SAVE_REPORT:
             return state.map(report => {
                 if (report.id === action.report.id) {
-                    console.log('updated report', action.report)
                     return action.report;
                 }
                 else {

@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import FormatAlignLeft from '@material-ui/icons/FormatAlignLeft';
 
 import { toFormattedDate } from '../../utils.jsx'
-import Report from '../../containers/Report.jsx';
 import {getTotalWorkingHours} from "../../utils";
 
 
@@ -64,35 +63,30 @@ const reportStyle = theme => ({
     },
 });
 
-class ReportPreview extends React.Component {
+
+@withStyles(reportStyle)
+class ReportPreview extends React.PureComponent {
     constructor(props) {
         super(props);
-
-        this.state = {
-            viewingReport: this.props.alreadyViewingReport
-        };
     }
 
-    openViewReport = () => {
-        this.setState({viewingReport: true});
-    };
-
-    closeViewReport = () => {
-        this.setState({viewingReport: false});
+    openReport = () => {
+        const { report } = this.props;
+        this.props.openReport(report);
     };
 
     render() {
-        const { viewingReport } = this.state;
-        const { classes, report, backgroundColor, alreadyViewingReport, ...passThroughProps } = this.props;
+        const { classes, className, style, report, backgroundColor } = this.props;
 
         return (
             <div
-                {...passThroughProps}
+                className={className}
+                style={style}
             >
                 <Paper
                     elevation={1}
                     className={classes.paper}
-                    onClick={this.openViewReport}
+                    onClick={this.openReport}
                 >
                     <Typography
                         className={classes.title}
@@ -123,17 +117,10 @@ class ReportPreview extends React.Component {
                         </Typography>
                     </div>
                 </Paper>
-                <Report
-                    isOpen={viewingReport}
-                    onClose={this.closeViewReport}
-                    report={report}
-                    editMode={false}
-                    isNewReport={false}
-                />
             </div>
         )
     }
 }
 
 
-export default withStyles(reportStyle)(ReportPreview);
+export default ReportPreview;

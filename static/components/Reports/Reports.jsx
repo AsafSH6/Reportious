@@ -1,8 +1,10 @@
 import React from 'react';
+
 import ClassNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
-import ReportPreview from './ReportPreview.jsx';
+import ReportPreview from '../../containers/ReportPreview.jsx';
+import Report from "../../containers/Report.jsx";
 import CreateReportButton from './CreateReportButton.jsx';
 
 
@@ -54,7 +56,9 @@ const reportsPreviewStyle = theme => ({
     }
 });
 
-class Reports extends React.Component {
+
+@withStyles(reportsPreviewStyle)
+class Reports extends React.PureComponent {
     constructor(props) {
         super(props);
     }
@@ -66,9 +70,7 @@ class Reports extends React.Component {
     indexToColor = index => this.props.colors(index).hex();
 
     render() {
-        const { classes, reports, viewingReportId } = this.props;
-        console.log('num of reports', reports.length);
-        console.log('first report', reports[0]);
+        const { classes, reports } = this.props;
 
         return (
             <div className={classes.root}>
@@ -83,7 +85,6 @@ class Reports extends React.Component {
                                         animationDelay: `${idx * 0.2}s`
                                     }}
                                     report={report}
-                                    alreadyViewingReport={viewingReportId === String(report.id)}
                                     backgroundColor={this.indexToColor(idx)}
                                 />
                             ))}
@@ -95,13 +96,16 @@ class Reports extends React.Component {
                             animationDelay: `${reports.length * 0.2 + 0.5}s`
                         }}
                     >
-                        <CreateReportButton />
+                        <CreateReportButton
+                            editNewReport={this.props.editNewReport}
+                        />
                     </div>
                 </div>
+                <Report />
             </div>
         )
     }
 }
 
 
-export default withStyles(reportsPreviewStyle)(Reports);
+export default Reports;

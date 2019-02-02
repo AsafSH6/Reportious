@@ -84,153 +84,69 @@ const styles = theme => ({
     }
 });
 
-class Report extends React.Component {
+
+@withStyles(styles)
+class Report extends React.PureComponent {
     constructor(props) {
         super(props);
-
-        this.state = {
-            editedReport: _.cloneDeep(this.props.report),
-            editMode: this.props.editMode,
-            isNewReport: this.props.isNewReport,
-        }
     }
 
-    onStartHourChange = idx => event => {
-        this.setState(prevState => {
-            const { editedReport } = prevState;
-            const daysReport = [...editedReport.daysReport];
-            const changedDayReport = daysReport[idx];
-
-            daysReport[idx] = {
-                ...changedDayReport,
-                startHour: event.target.value
-            };
-
-            return {
-                editedReport: {
-                    ...editedReport,
-                    daysReport: daysReport
-                }
-            }
-        })
+    onStartHourChange = dayIdx => event => {
+        this.props.updateDayStartHour(dayIdx, event.target.value);
     };
 
-    onEndHourChange = idx => event => {
-        this.setState(prevState => {
-            const { editedReport } = prevState;
-            const daysReport = [...editedReport.daysReport];
-            const changedDayReport = daysReport[idx];
-
-            daysReport[idx] = {
-                ...changedDayReport,
-                endHour: event.target.value
-            };
-
-            return {
-                editedReport: {
-                    ...editedReport,
-                    daysReport: daysReport
-                }
-            }
-        })
+    onEndHourChange = dayIdx => event => {
+        this.props.updateDayEndHour(dayIdx, event.target.value);
     };
 
-    onAmountChange = idx => event => {
-        this.setState(prevState => {
-            const { editedReport } = prevState;
-            const daysReport = editedReport.daysReport;
-            const changedDayReport = daysReport[idx];
-
-            daysReport[idx] = {
-                ...changedDayReport,
-                amount: event.target.value
-            };
-
-            return {
-                editedReport: {
-                    ...editedReport,
-                    daysReport: [...daysReport]
-                }
-            }
-        })
+    onAmountChange = dayIdx => event => {
+        this.props.updateDayAmount(dayIdx, event.target.value);
     };
 
     onDrivingKMChange = event => {
-        this.setState(prevState => {
-            const { editedReport } = prevState;
-
-            return {
-                editedReport: {
-                    ...editedReport,
-                    drivingInKM: event.target.value
-                }
-            }
-        })
+        this.props.updateDrivingKM(event.target.value);
     };
 
     onEnableEditMode = event => {
-        this.setState({
-            editMode: true
-        })
+        this.props.editReport(event);
     };
 
     onClose = event => {
-        this.props.onClose(event);
-        this.setState({
-            editMode: false,
-            report: this.props.report,
-        })
+        this.props.closeReport(event);
     };
 
     onClickAway = event => {
         // Exit page on click away only if not in edit mode.
-        if (this.state.editMode === false) {
+        if (this.props.editMode === false) {
             return this.onClose(event);
         }
     };
 
     onCancel = event => {
-        this.setState({
-            editMode: false,
-            report: this.props.report
-        })
+        this.props.cancelEditReport(event);
     };
 
     onSave = event => {
-        const { editedReport } = this.state;
-
-        console.log('onSave report', editedReport);
-        this.props.saveReport(editedReport).then(savedReport => {
-            this.setState({
-                editedReport: _.cloneDeep(savedReport),
-                editMode: false,
-            })
-        });
+        const { report, saveReport } = this.props;
+        saveReport(report)
     };
 
     onCreate = event => {
-        const { editedReport } = this.state;
-
-        this.props.createReport(editedReport).then(createdReport => {
-            this.setState({
-                editedReport: _.cloneDeep(createdReport),
-                editMode: false,
-                isNewReport: false,
-            })
-        });
+        const { report, createReport } = this.props;
+        createReport(report);
     };
 
     getTotalWorkingHours = () => {
-        const { editedReport } = this.state;
-        return getTotalWorkingHours(editedReport);
+        const { report } = this.props;
+        return getTotalWorkingHours(report);
     };
 
     render() {
-        const { report, editMode, isNewReport } = this.state;
-        const { classes, isOpen, downloadReport } = this.props;
+        const { classes, report, isNewReport, editMode, downloadReport } = this.props;
+        if (report === null) return null;
+
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
-        console.log('report', this.props.report);
         const ReportSubjects = ['מספר גנים', 'עד שעה', 'משעה', 'יום בחודש'].map((subject, idx) => (
             <Typography
                 key={`report-subject-${idx}`}
@@ -404,13 +320,11 @@ class Report extends React.Component {
             }
             </React.Fragment>
         );
-        if (isOpen){
-            console.log('opened report', report);
-        }
+
         return (
             <div>
                 <Dialog
-                    open={isOpen}
+                    open
                     onClose={this.onClickAway}
                     aria-labelledby="form-dialog-title"
                     className={classes.root}
@@ -457,4 +371,4 @@ class Report extends React.Component {
 }
 
 
-export default withStyles(styles)(Report);
+export default Report;

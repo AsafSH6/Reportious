@@ -1,3 +1,7 @@
+export const SET_REPORT = 'set_report';
+export const UNSET_REPORT = 'unset_report';
+export const EDIT_REPORT = 'edit_report';
+export const CANCEL_EDIT_REPORT = 'cancel_edit_report';
 export const UPDATE_DAY_START_HOUR = 'update_day_start_hour';
 export const UPDATE_DAY_END_HOUR = 'update_day_end_hour';
 export const UPDATE_DAY_AMOUNT = 'update_day_amount';

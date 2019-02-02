@@ -36,8 +36,6 @@ class CreateReportButton extends React.Component {
             choosingReportDate: false,
             selectedReportMonth: dateBeforeOneMonth.getMonth(),
             selectedReportYear: dateBeforeOneMonth.getFullYear(),
-            creatingReport: false,
-            newReport: null
         }
     }
 
@@ -62,26 +60,22 @@ class CreateReportButton extends React.Component {
     createReportWithSelectedReportDate = () => {
         const { selectedReportMonth, selectedReportYear } = this.state;
         const selectedDate = new Date(selectedReportYear, selectedReportMonth);
+        const newReport = getEmptyReport(selectedDate);
+        this.props.editNewReport(newReport);
 
         this.setState({
             choosingReportDate: false,
-            creatingReport: true,
-            newReport: getEmptyReport(selectedDate)
         });
     };
 
     onClose = () => {
         this.setState({
             choosingReportDate: false,
-            creatingReport: false,
-            newReport: null
         });
     };
 
     render() {
         const {
-            creatingReport,
-            newReport,
             choosingReportDate,
             selectedReportMonth,
             selectedReportYear,
@@ -109,16 +103,6 @@ class CreateReportButton extends React.Component {
                     onSelectedReportYear={this.onSelectedReportYear}
                     onSaveReportDate={this.createReportWithSelectedReportDate}
                 />
-                {
-                    newReport ?
-                    (<Report
-                        isOpen={creatingReport}
-                        onClose={this.onClose}
-                        report={newReport}
-                        editMode={true}
-                        isNewReport={true} />)
-                    : null
-                }
             </div>
         )
     }
