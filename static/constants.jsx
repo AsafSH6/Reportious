@@ -16,17 +16,17 @@ export const allReportTypes = [
     {
         name: 'Coming Soon 1',
         type: 'coming-soon-1',
-        img: '/images/backgroundpic.jpg'
+        img: '/static/images/backgroundpic.jpg'
     },
     {
         name: 'Working Hours Report',
         type: 'working-hours-report',
-        img: '/images/backgroundpic.jpg'
+        img: '/static/images/backgroundpic.jpg'
     },
     {
         name: 'Coming Soon 2',
         type: 'coming-soon-2',
-        img: '/images/backgroundpic.jpg'
+        img: '/static/images/backgroundpic.jpg'
     }
 ];
 
