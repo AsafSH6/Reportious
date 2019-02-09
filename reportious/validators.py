@@ -5,7 +5,7 @@ REPORT_WORKING_DAYS_SCHEMA = {
     'items': {
         'type': 'object',
         'properties': {
-            'day_number': {
+            'number': {
                 '$ref': '#definitions/day_number'
             },
             'start_hour': {
@@ -18,7 +18,7 @@ REPORT_WORKING_DAYS_SCHEMA = {
                 '$href': '#definitions/amount'
             }
         },
-        'required': ['day_number', 'start_hour', 'end_hour', 'amount'],
+        'required': ['number', 'start_hour', 'end_hour', 'amount'],
         'additionalProperties': False
     },
     'definitions': {

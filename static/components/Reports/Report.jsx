@@ -156,7 +156,8 @@ class Report extends React.PureComponent {
             </Typography>
         ));
 
-        const ReportWorkingHours = report.daysReport.map((dayReport, idx) => (
+        const ReportWorkingHours = report.days
+            .map((day, idx) => (
                 <div
                     key={`day-report-${report.id}-${idx}`}
                     className={classes.reportRow}
@@ -164,7 +165,7 @@ class Report extends React.PureComponent {
                     <TextField
                         className={classes.reportRowItem}
                         onChange={this.onAmountChange(idx)}
-                        value={dayReport.amount}
+                        value={day.amount}
                         inputProps={{
                             className: classes.input
                         }}
@@ -174,7 +175,7 @@ class Report extends React.PureComponent {
                         disabled={editMode === false}
                     />
                     <Select
-                        value={dayReport.endHour}
+                        value={day.endHour}
                         onChange={this.onEndHourChange(idx)}
                         name="בחר"
                         displayEmpty
@@ -196,7 +197,7 @@ class Report extends React.PureComponent {
                         ))}
                     </Select>
                     <Select
-                        value={dayReport.startHour}
+                        value={day.startHour}
                         onChange={this.onStartHourChange(idx)}
                         name="בחר"
                         displayEmpty
@@ -219,7 +220,7 @@ class Report extends React.PureComponent {
                     </Select>
                     <TextField
                         className={classes.reportRowItem}
-                        value={`.${dayReport.day}`}
+                        value={`.${day.number}`}
                         inputProps={{
                             className: classes.input
                         }}

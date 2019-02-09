@@ -52,52 +52,52 @@ export default (state = initialState, action) => {
         }
         case UPDATE_DAY_START_HOUR: {
             const {editingReport} = state;
-            const daysReport = [...editingReport.daysReport];
-            const changedDayReport = daysReport[action.dayIdx];
+            const days = [...editingReport.days];
+            const changedDay = days[action.dayIdx];
 
-            daysReport[action.dayIdx] = {
-                ...changedDayReport,
+            days[action.dayIdx] = {
+                ...changedDay,
                 startHour: action.startHour
             };
             return {
                 ...state,
                 editingReport: {
                     ...editingReport,
-                    daysReport: daysReport
+                    days: days
                 }
             };
         }
         case UPDATE_DAY_END_HOUR: {
             const {editingReport} = state;
-            const daysReport = [...editingReport.daysReport];
-            const changedDayReport = daysReport[action.dayIdx];
+            const days = [...editingReport.days];
+            const changedDay = days[action.dayIdx];
 
-            daysReport[action.dayIdx] = {
-                ...changedDayReport,
+            days[action.dayIdx] = {
+                ...changedDay,
                 endHour: action.endHour
             };
             return {
                 ...state,
                 editingReport: {
                     ...editingReport,
-                    daysReport: daysReport
+                    days: days
                 }
             };
         }
         case UPDATE_DAY_AMOUNT: {
             const { editingReport } = state;
-            const daysReport = [...editingReport.daysReport];
-            const changedDayReport = daysReport[action.dayIdx];
+            const days = [...editingReport.days];
+            const changedDay = days[action.dayIdx];
 
-            daysReport[action.dayIdx] = {
-                ...changedDayReport,
+            days[action.dayIdx] = {
+                ...changedDay,
                 amount: action.amount
             };
             return {
                 ...state,
                 editingReport: {
                     ...editingReport,
-                    daysReport: daysReport
+                    days: days
                 }
             };
         }

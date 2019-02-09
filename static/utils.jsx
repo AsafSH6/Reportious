@@ -24,7 +24,7 @@ export const getEmptyReport = (date = null) => ({
     date: date || new Date(),
     days: [
         ...[...Array(31)].map((_, idx) => ({
-            day: idx + 1,
+            number: idx + 1,
             startHour: "",
             endHour: "",
             amount: ""
@@ -35,9 +35,9 @@ export const getEmptyReport = (date = null) => ({
 export const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 
 export const getTotalWorkingHours = report => {
-    const reducer = (sum, dayReport) => {
-        const startHour = Date.parse(`01 Jan 1970 ${dayReport.startHour}:00 GMT`);
-        const endHour = Date.parse(`01 Jan 1970 ${dayReport.endHour}:00 GMT`);
+    const reducer = (sum, day) => {
+        const startHour = Date.parse(`01 Jan 1970 ${day.startHour}:00 GMT`);
+        const endHour = Date.parse(`01 Jan 1970 ${day.endHour}:00 GMT`);
         if(startHour && endHour && endHour > startHour) {  // Invalid day report.
             const dayWorkingHours = endHour - startHour;
             return sum + dayWorkingHours;
