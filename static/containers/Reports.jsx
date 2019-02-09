@@ -15,9 +15,10 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     loadReports: () => {
         const { reportType } = ownProps.match.params;
-        const reports = reportsService.loadReports(reportType);
 
-        return dispatch(updateReports(reports))
+        reportsService.loadReports(reportType).then(reports => {
+            dispatch(updateReports(reports))
+        });
     },
     editNewReport: report => {
         dispatch(setReport(report, true))  // It's a new report.

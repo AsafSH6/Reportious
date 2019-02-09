@@ -14,7 +14,11 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-    updateOptions: () => dispatch(updateOptions(reportsService.loadOptions())),
+    updateOptions: () => {
+        reportsService.loadOptions().then(options => {
+            dispatch(updateOptions(options));
+        })
+    },
 });
 
 export default connect(

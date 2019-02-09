@@ -22,7 +22,7 @@ export const getHoursList = ({minHour = 8, maxHour = 19}) => {
 
 export const getEmptyReport = (date = null) => ({
     date: date || new Date(),
-    daysReport: [
+    days: [
         ...[...Array(31)].map((_, idx) => ({
             day: idx + 1,
             startHour: "",
@@ -47,8 +47,25 @@ export const getTotalWorkingHours = report => {
         }
     };
 
-    return (report.daysReport.reduce(reducer, 0) / HOUR_IN_MILLISECONDS);
+    return (report.days.reduce(reducer, 0) / HOUR_IN_MILLISECONDS);
 };
 
 export const MONTHS_LIST = moment.months();
 export const YEAR_LIST = [...Array(4)].map((_, idx) => 2017 + idx);
+
+
+export const getCSRFToken = () => {
+    let csrfToken = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, 10) === ('csrftoken' + '=')) {
+                csrfToken = decodeURIComponent(cookie.substring(10));
+                break;
+            }
+        }
+    }
+
+    return csrfToken;
+};

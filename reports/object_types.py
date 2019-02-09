@@ -1,3 +1,4 @@
+from graphene.types import generic
 from graphene_django.types import DjangoObjectType
 from django.contrib.auth.models import User
 
@@ -11,5 +12,8 @@ class UserType(DjangoObjectType):
 
 
 class WorkingHoursReportType(DjangoObjectType):
+    days = generic.GenericScalar()
+
     class Meta:
         model = WorkingHoursReport
+
