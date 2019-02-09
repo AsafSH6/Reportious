@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from graphene_django.views import GraphQLView
+
+from reportious.schema import schema
+
 urlpatterns = [
     path(r'admin/', admin.site.urls),
+    path(r'graphql/', GraphQLView.as_view(graphiql=True, schema=schema)),
     path(r'', include('reports.urls')),
 ]
