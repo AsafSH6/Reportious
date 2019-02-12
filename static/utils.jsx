@@ -29,7 +29,7 @@ export const getEmptyReport = (date = null) => ({
             endHour: "",
             amount: ""
         }))],
-    drivingInKM: 0,
+    drivingInKm: 0,
 });
 
 export const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
@@ -57,9 +57,9 @@ export const YEAR_LIST = [...Array(4)].map((_, idx) => 2017 + idx);
 export const getCSRFToken = () => {
     let csrfToken = null;
     if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
             if (cookie.substring(0, 10) === ('csrftoken' + '=')) {
                 csrfToken = decodeURIComponent(cookie.substring(10));
                 break;
@@ -69,3 +69,18 @@ export const getCSRFToken = () => {
 
     return csrfToken;
 };
+
+
+export const dayToRegularCase = day => ({
+    number: day.number,
+    start_hour: day.startHour || day.start_hour || "",
+    end_hour: day.endHour || day.end_hour || "",
+    amount: day.amount
+});
+
+export const dayToCamelCase = day => ({
+    number: day.number,
+    startHour: day.start_hour || day.startHour,
+    endHour: day.end_hour || day.endHour,
+    amount: day.amount
+});

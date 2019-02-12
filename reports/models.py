@@ -1,3 +1,5 @@
+import datetime as dt
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
@@ -9,7 +11,7 @@ class WorkingHoursReport(models.Model):
     user = models.ForeignKey(User,
                              related_name='working_hours_reports',
                              on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=dt.date.today)
     days = JSONField(validators=[validate_report_working_days])
     driving_in_km = models.PositiveIntegerField()
 

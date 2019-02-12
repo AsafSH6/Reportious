@@ -3,11 +3,12 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
-import { getCSRFToken } from '../utils.jsx';
+import { getCSRFToken, dayToRegularCase } from '../utils.jsx';
 import {
     reports,
     allReportTypes,
 } from '../constants.jsx';
+import {dayToCamelCase} from "../utils";
 
 class ReportsService {
     constructor() {
@@ -26,7 +27,7 @@ class ReportsService {
     loadOptions = async () => allReportTypes;
 
     _loadWorkingHoursReports = async () => {
-        const reports = await this.client
+        const response = await this.client
             .query({
                 query: gql`
                         query {
@@ -39,14 +40,74 @@ class ReportsService {
                         }
                     `
             });
-        return reports.data.workingHoursReports;
+        const workingHoursReports = response.data.workingHoursReports;
+        return workingHoursReports.map(report => ({
+            ...report,
+            days: report.days.map(dayToCamelCase)
+        }));
     };
 
     loadReports = async (reportType) => {
         return this._loadWorkingHoursReports();
     };
-    saveReport = report => new Promise((resolve, reject) => {console.log('Saving report', report); resolve(report)});
-    createReport = report => new Promise((resolve, reject) => {console.log('Creating report', report); resolve(report)});
+
+    saveReport = async report => {
+        const variables = {
+            id: report.id,
+            drivingInKm: report.drivingInKm,
+            days: JSON.stringify(report.days.map(dayToRegularCase))
+        };
+
+        const response = await this.client.mutate({
+            mutation: gql`
+                    mutation SaveWorkingHoursReport($id: Int!, $days: JSONString!, $drivingInKm: Int!) {
+                        saveWorkingHoursReport(id: $id, days: $days, drivingInKm: $drivingInKm) {
+                            savedWorkingHoursReport{
+                                id
+                                date
+                                days
+                                drivingInKm
+                            }
+                        }
+                    }
+            `,
+            variables
+        });
+
+        const savedReport = response.data.saveWorkingHoursReport.savedWorkingHoursReport;
+        return {
+            ...savedReport,
+            days: savedReport.days.map(dayToCamelCase)
+        };
+    };
+
+    createReport = async report => {
+        const variables = {
+            ...report,
+            days: JSON.stringify(report.days.map(dayToRegularCase))
+        };
+        const response = await this.client.mutate({
+            mutation: gql`
+                    mutation CreateWorkingHoursReport($date: DateTime!, $days: JSONString!, $drivingInKm: Int!) {
+                        createWorkingHoursReport(date: $date, days: $days, drivingInKm: $drivingInKm) {
+                            createdWorkingHoursReport{
+                                id
+                                date
+                                days
+                                drivingInKm
+                            }
+                        }
+                    }
+            `,
+            variables
+        });
+
+        const createdReport = response.data.createWorkingHoursReport.createdWorkingHoursReport;
+        return {
+            ...createdReport,
+            days: createdReport.days.map(dayToCamelCase)
+        };
+    };
     downloadReport = reportId => console.log('Downloading report', reportId);
 }
 

@@ -21,11 +21,6 @@ export default (state = initialState, action) => {
                 }
             });
         case CREATE_REPORT:
-            // ********************************************************************************
-            // WILL BE REMOVED ONCE WE CREATE REAL SERVER.
-            action.report.id = Math.max(...state.map(report => report.id)) + 1;
-            action.report.name = `report ${action.report.id}`;
-            // ********************************************************************************
             return [action.report, ...state];
         default:
             return state;

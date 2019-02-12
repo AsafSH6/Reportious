@@ -20,7 +20,7 @@ const styles = theme => ({
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        backgroundImage: 'url("/images/bodybackground.jpg")',
+        backgroundImage: 'url("/static/images/bodybackground.jpg")',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover'
     },
