@@ -1,19 +1,7 @@
 import graphene
 
 from reports.models import WorkingHoursReport
-from reports.object_types import UserType, WorkingHoursReportType
-
-
-class UserQuery(object):
-    me = graphene.Field(UserType)
-
-    def resolve_me(self, info):
-        user = info.context.user
-
-        if user.is_anonymous:
-            raise Exception('Not logged in.')
-
-        return user
+from reports.object_types import WorkingHoursReportType
 
 
 class WorkingHoursReportQuery(object):
@@ -28,5 +16,5 @@ class WorkingHoursReportQuery(object):
         return WorkingHoursReport.objects.filter(user=user)
 
 
-class Query(UserQuery, WorkingHoursReportQuery):
+class Query(WorkingHoursReportQuery):
     pass

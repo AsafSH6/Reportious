@@ -5,7 +5,6 @@ import gql from 'graphql-tag';
 
 import { getCSRFToken, dayToRegularCase } from '../utils.jsx';
 import {
-    reports,
     allReportTypes,
 } from '../constants.jsx';
 import {dayToCamelCase} from "../utils";

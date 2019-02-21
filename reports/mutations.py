@@ -1,21 +1,7 @@
 import graphene
-from django.contrib.auth.models import User
 
 from reports.models import WorkingHoursReport
-from reports.object_types import UserType, WorkingHoursReportType
-
-
-class CreateUser(graphene.Mutation):
-    class Arguments:
-        username = graphene.String()
-        password = graphene.String()
-
-    user = graphene.Field(UserType)
-    created = graphene.Boolean()
-
-    def mutate(self, info, username, password):
-        user = User.objects.create_user(username=username, password=password)
-        return CreateUser(user=user, created=True)
+from reports.object_types import WorkingHoursReportType
 
 
 class CreateWorkingHoursReport(graphene.Mutation):
@@ -59,6 +45,5 @@ class SaveWorkingHoursReport(graphene.Mutation):
 
 
 class Mutation(object):
-    create_user = CreateUser.Field()
     create_working_hours_report = CreateWorkingHoursReport.Field()
     save_working_hours_report = SaveWorkingHoursReport.Field()

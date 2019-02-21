@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'graphene_django',
     'reports',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -134,4 +135,8 @@ GRAPHENE = {
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
+}
+
+GRAPHQL_JWT = {
+    'JWT_ALLOW_ARGUMENT': True,
 }
