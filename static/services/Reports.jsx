@@ -1,26 +1,17 @@
-import ApolloClient from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
-import { getCSRFToken, dayToRegularCase } from '../utils.jsx';
+import Service from './Service.jsx'
+
+import { dayToRegularCase } from '../utils.jsx';
 import {
     allReportTypes,
 } from '../constants.jsx';
-import {dayToCamelCase} from "../utils";
+import { dayToCamelCase } from "../utils";
 
-class ReportsService {
+
+class ReportsService extends Service {
     constructor() {
-        this.client = new ApolloClient({
-            link: createHttpLink({
-                uri: '/graphql/',
-                credentials: 'same-origin',
-                headers: {
-                    'X-CSRFToken': getCSRFToken(),
-                }
-            }),
-            cache: new InMemoryCache()
-        });
+        super();
     }
 
     loadOptions = async () => allReportTypes;
@@ -30,7 +21,7 @@ class ReportsService {
             .query({
                 query: gql`
                         query {
-                          workingHoursReports {
+                          workingHoursReports(token: "${this.jwt_token}") {
                             id
                             date
                             days
@@ -60,7 +51,7 @@ class ReportsService {
         const response = await this.client.mutate({
             mutation: gql`
                     mutation SaveWorkingHoursReport($id: Int!, $days: JSONString!, $drivingInKm: Int!) {
-                        saveWorkingHoursReport(id: $id, days: $days, drivingInKm: $drivingInKm) {
+                        saveWorkingHoursReport(id: $id, days: $days, drivingInKm: $drivingInKm, token: "${this.jwt_token}") {
                             savedWorkingHoursReport{
                                 id
                                 date
@@ -88,7 +79,7 @@ class ReportsService {
         const response = await this.client.mutate({
             mutation: gql`
                     mutation CreateWorkingHoursReport($date: DateTime!, $days: JSONString!, $drivingInKm: Int!) {
-                        createWorkingHoursReport(date: $date, days: $days, drivingInKm: $drivingInKm) {
+                        createWorkingHoursReport(date: $date, days: $days, drivingInKm: $drivingInKm, token: "${this.jwt_token}") {
                             createdWorkingHoursReport{
                                 id
                                 date
@@ -107,7 +98,7 @@ class ReportsService {
             days: createdReport.days.map(dayToCamelCase)
         };
     };
-    downloadReport = reportId => console.log('Downloading report', reportId);
+    downloadReport = reportId => Promise.resolve(true);
 }
 
 

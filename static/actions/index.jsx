@@ -11,7 +11,9 @@ import {
     UPDATE_OPTIONS,
     SAVE_REPORT,
     CREATE_REPORT,
-    LOGGED_IN
+    LOGGED_IN,
+    OPEN_SNACKBAR,
+    CLOSE_SNACKBAR
 } from '../constants.jsx';
 
 
@@ -90,4 +92,36 @@ export const createReport = report => ({
 
 export const loggedIn = () => ({
     type: LOGGED_IN,
+});
+
+
+export const openSuccessSnackbar = message => ({
+    type: OPEN_SNACKBAR,
+    variant: 'success',
+    message,
+});
+
+
+export const openWarningSnackbar = message => ({
+    type: OPEN_SNACKBAR,
+    variant: 'warning',
+    message,
+});
+
+export const openErrorSnackbar = message => ({
+    type: OPEN_SNACKBAR,
+    variant: 'error',
+    message,
+});
+
+
+export const openInfoSnackbar = message => ({
+    type: OPEN_SNACKBAR,
+    variant: 'info',
+    message,
+});
+
+
+export const closeSnackbar = () => ({
+    type: CLOSE_SNACKBAR,
 });

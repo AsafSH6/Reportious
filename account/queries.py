@@ -16,5 +16,6 @@ class UserQuery(object):
 
         return user
 
+
 class Query(UserQuery):
     pass

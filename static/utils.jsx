@@ -54,23 +54,6 @@ export const MONTHS_LIST = moment.months();
 export const YEAR_LIST = [...Array(4)].map((_, idx) => 2017 + idx);
 
 
-export const getCSRFToken = () => {
-    let csrfToken = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, 10) === ('csrftoken' + '=')) {
-                csrfToken = decodeURIComponent(cookie.substring(10));
-                break;
-            }
-        }
-    }
-
-    return csrfToken;
-};
-
-
 export const dayToRegularCase = day => ({
     number: day.number,
     start_hour: day.startHour || day.start_hour || "",
@@ -80,7 +63,7 @@ export const dayToRegularCase = day => ({
 
 export const dayToCamelCase = day => ({
     number: day.number,
-    startHour: day.start_hour || day.startHour,
-    endHour: day.end_hour || day.endHour,
+    startHour: day.start_hour || day.startHour || "",
+    endHour: day.end_hour || day.endHour || "",
     amount: day.amount
 });

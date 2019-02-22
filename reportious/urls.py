@@ -24,5 +24,5 @@ from reportious.schema import schema
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'graphql/', GraphQLView.as_view(graphiql=True, schema=schema)),
-    url(r'^(?:.*)/?$', include('reports.urls')),
+    url(r'^(?:.*)/?', include('reports.urls')),
 ]

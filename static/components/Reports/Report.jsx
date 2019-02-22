@@ -299,7 +299,7 @@ class Report extends React.PureComponent {
         const ActionButtons = (
             <React.Fragment>
             {editMode === false ? (
-                <Button onClick={downloadReport} color="primary">
+                <Button onClick={() => downloadReport(report.id)} color="primary">
                     Download
                 </Button>)
                    : (

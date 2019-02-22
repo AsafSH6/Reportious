@@ -12,7 +12,10 @@ import {
     saveReport,
     createReport,
     setReport,
-    unsetReport
+    unsetReport,
+    openSuccessSnackbar,
+    openInfoSnackbar,
+    openErrorSnackbar
 } from "../actions";
 
 
@@ -20,7 +23,6 @@ const mapStateToProps = (state, ownProps) => ({
     report: state.report.editingReport,
     isNewReport: state.report.isNewReport,
     editMode: state.report.editMode,
-    downloadReport: () => ReportsService.downloadReport(ownProps.report.id)
 });
 
 
@@ -42,17 +44,30 @@ const mapDispatchToProps = dispatch => ({
     },
     saveReport: report => {
         return ReportsService.saveReport(report).then(savedReport => {
+            dispatch(openSuccessSnackbar('Saved Report'));
             dispatch(saveReport(savedReport));
             dispatch(setReport(savedReport, false));
             return savedReport;
+        }).catch(err => {
+            dispatch(openErrorSnackbar('Failed To Save Report'));
         });
     },
     createReport: report => {
         return ReportsService.createReport(report).then(createdReport => {
+            dispatch(openSuccessSnackbar('Created Report'));
             dispatch(createReport(createdReport));
             dispatch(setReport(createdReport, false)); // Not a new report anymore.
             return createdReport;
+        }).catch(err => {
+            dispatch(openErrorSnackbar('Failed To Create Report'));
         });
+    },
+    downloadReport: reportId => {
+        ReportsService.downloadReport(reportId).then(() => {
+            dispatch(openInfoSnackbar('Downloading Report'));
+        }).catch(err => {
+            dispatch(openErrorSnackbar('Failed To Download Report'));
+        })
     }
 });
 

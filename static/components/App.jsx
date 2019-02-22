@@ -16,6 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AppBar from './AppBar.jsx'
 import NotFound from './NotFound.jsx'
+import { Snackbar } from '../containers'
 
 import {
     Welcome,
@@ -56,6 +57,7 @@ const styles = {
 
 @withStyles(styles)
 class App extends React.PureComponent {
+
     render() {
         const { classes, isLoggedIn } = this.props;
 
@@ -84,6 +86,7 @@ class App extends React.PureComponent {
                             />
                         </Switch>
                         {isLoggedIn === false && window.location.pathname !== '/welcome/' && <Redirect to='/welcome/'/>}
+                        <Snackbar />
                     </div>
                 </MuiThemeProvider>
             </Router>

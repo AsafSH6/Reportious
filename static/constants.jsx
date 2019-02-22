@@ -11,6 +11,8 @@ export const SAVE_REPORT = 'save_report';
 export const CREATE_REPORT = 'create_report';
 export const UPDATE_OPTIONS = 'update_options';
 export const LOGGED_IN = 'logged_in';
+export const OPEN_SNACKBAR = 'open_snackbar';
+export const CLOSE_SNACKBAR = 'close_snackbar';
 
 export const allReportTypes = [
     {

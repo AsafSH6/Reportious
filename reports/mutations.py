@@ -1,4 +1,5 @@
 import graphene
+from graphql_jwt.decorators import login_required
 
 from reports.models import WorkingHoursReport
 from reports.object_types import WorkingHoursReportType
@@ -6,13 +7,15 @@ from reports.object_types import WorkingHoursReportType
 
 class CreateWorkingHoursReport(graphene.Mutation):
     class Arguments:
+        token = graphene.String(required=True)
         date = graphene.DateTime()
         days = graphene.JSONString()
         driving_in_km = graphene.Int()
 
     created_working_hours_report = graphene.Field(WorkingHoursReportType)
 
-    def mutate(self, info, date, days, driving_in_km):
+    @login_required
+    def mutate(self, info, token, date, days, driving_in_km):
         user = info.context.user
         if not user or user.is_anonymous:
             raise Exception('Not logged in.')
@@ -28,13 +31,15 @@ class CreateWorkingHoursReport(graphene.Mutation):
 
 class SaveWorkingHoursReport(graphene.Mutation):
     class Arguments:
+        token = graphene.String(required=True)
         id = graphene.Int()
         days = graphene.JSONString()
         driving_in_km = graphene.Int()
 
     saved_working_hours_report = graphene.Field(WorkingHoursReportType)
 
-    def mutate(self, info, id, days, driving_in_km):
+    @login_required
+    def mutate(self, info, token, id, days, driving_in_km):
         working_hour_report = WorkingHoursReport.objects.get(pk=id)
         working_hour_report.days = days
         working_hour_report.driving_in_km = driving_in_km
