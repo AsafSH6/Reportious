@@ -1,6 +1,7 @@
 
 .idea/
 node_modules/
+t.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
