@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 
 import Service from './Service.jsx'
-
-import { dayToRegularCase } from '../utils.jsx';
+import { allReportTypes } from '../constants.jsx';
 import {
-    allReportTypes,
-} from '../constants.jsx';
-import { dayToCamelCase } from "../utils";
+    dayToRegularCase,
+    dayToCamelCase,
+    downloadFile
+} from "../utils";
 
 
 class ReportsService extends Service {
@@ -98,7 +98,25 @@ class ReportsService extends Service {
             days: createdReport.days.map(dayToCamelCase)
         };
     };
-    downloadReport = reportId => Promise.resolve(true);
+    downloadWorkingHoursReport = async (reportId) => {
+        const response = await this.client
+            .query({
+                query: gql`
+                        query {
+                          workingHoursReport(id: ${reportId}, token: "${this.jwt_token}") {
+                            date
+                            reportFile                            
+                          }
+                        }
+                    `,
+                fetchPolicy: 'network-only'
+            });
+
+        const { reportFile, date } = response.data.workingHoursReport;
+        const decodedReportFile = atob(reportFile.slice(2, -1));
+        const fileName = `Working Hours Report ${date}.xlsx`;
+        return downloadFile(decodedReportFile, 'application/vnd.ms-excel', fileName);
+    };
 }
 
 

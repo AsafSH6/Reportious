@@ -6,7 +6,14 @@ from reports.object_types import WorkingHoursReportType
 
 
 class WorkingHoursReportQuery(object):
+    working_hours_report = graphene.Field(WorkingHoursReportType,
+                                          id=graphene.Int(required=True),
+                                          token=graphene.String(required=True))
     working_hours_reports = graphene.List(WorkingHoursReportType, token=graphene.String(required=True))
+
+    @login_required
+    def resolve_working_hours_report(self, info, id, **kwargs):
+        return WorkingHoursReport.objects.get(pk=id)
 
     @login_required
     def resolve_working_hours_reports(self, info, **kwargs):

@@ -63,9 +63,10 @@ const mapDispatchToProps = dispatch => ({
         });
     },
     downloadReport: reportId => {
-        ReportsService.downloadReport(reportId).then(() => {
+        ReportsService.downloadWorkingHoursReport(reportId).then(() => {
             dispatch(openInfoSnackbar('Downloading Report'));
         }).catch(err => {
+            console.error(err);
             dispatch(openErrorSnackbar('Failed To Download Report'));
         })
     }

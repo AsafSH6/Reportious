@@ -67,3 +67,19 @@ export const dayToCamelCase = day => ({
     endHour: day.end_hour || day.endHour || "",
     amount: day.amount
 });
+
+
+export const downloadFile = (data, fileType, fileName) => {
+    const bytes = new Uint8Array(data.length);
+    for (let i = 0; i < data.length; i++) {
+        bytes[i] = data.charCodeAt(i);
+    }
+
+    const blob = new Blob([bytes], {type: fileType});
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+
+    return true;
+}
