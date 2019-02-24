@@ -60,9 +60,9 @@ export const updateDayAmount = (dayIdx, amount) => ({
 });
 
 
-export const updateDrivingKM = drivingInKM => ({
+export const updateDrivingKm = drivingInKm => ({
     type: UPDATE_DRIVING_KM,
-    drivingInKM,
+    drivingInKm,
 });
 
 

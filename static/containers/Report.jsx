@@ -6,7 +6,7 @@ import {
     updateDayStartHour,
     updateDayEndHour,
     updateDayAmount,
-    updateDrivingKM,
+    updateDrivingKm,
     editReport,
     cancelEditReport,
     saveReport,
@@ -39,8 +39,8 @@ const mapDispatchToProps = dispatch => ({
     updateDayAmount:(dayIdx, amount) => {
         dispatch(updateDayAmount(dayIdx, amount));
     },
-    updateDrivingKM: drivingInKM => {
-        dispatch(updateDrivingKM(drivingInKM));
+    updateDrivingKm: drivingInKm => {
+        dispatch(updateDrivingKm(drivingInKm));
     },
     saveReport: report => {
         return ReportsService.saveReport(report).then(savedReport => {

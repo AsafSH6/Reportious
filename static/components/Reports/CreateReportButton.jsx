@@ -29,13 +29,12 @@ class CreateReportButton extends React.Component {
     constructor(props) {
         super(props);
 
-        const dateBeforeOneMonth = new Date();
-        dateBeforeOneMonth.setMonth(dateBeforeOneMonth.getMonth() - 1); // Previous month.
+        const currentDate = new Date();
 
         this.state = {
             choosingReportDate: false,
-            selectedReportMonth: dateBeforeOneMonth.getMonth(),
-            selectedReportYear: dateBeforeOneMonth.getFullYear(),
+            selectedReportMonth: currentDate.getMonth(),
+            selectedReportYear: currentDate.getFullYear(),
         }
     }
 

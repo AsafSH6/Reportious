@@ -21,6 +21,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case SET_REPORT: {
+
             return {
                 editingReport: _.cloneDeep(action.report),
                 originalReport: _.cloneDeep(action.report),
@@ -43,7 +44,8 @@ export default (state = initialState, action) => {
             };
         }
         case CANCEL_EDIT_REPORT: {
-            const {originalReport} = state;
+            const { originalReport } = state;
+
             return {
                 ...state,
                 editingReport: _.cloneDeep(originalReport),
@@ -51,7 +53,7 @@ export default (state = initialState, action) => {
             };
         }
         case UPDATE_DAY_START_HOUR: {
-            const {editingReport} = state;
+            const { editingReport } = state;
             const days = [...editingReport.days];
             const changedDay = days[action.dayIdx];
 
@@ -68,7 +70,7 @@ export default (state = initialState, action) => {
             };
         }
         case UPDATE_DAY_END_HOUR: {
-            const {editingReport} = state;
+            const { editingReport } = state;
             const days = [...editingReport.days];
             const changedDay = days[action.dayIdx];
 
@@ -108,7 +110,7 @@ export default (state = initialState, action) => {
                 ...state,
                 editingReport: {
                     ...editingReport,
-                    drivingInKM: action.drivingInKM
+                    drivingInKm: action.drivingInKm
                 }
             };
         }

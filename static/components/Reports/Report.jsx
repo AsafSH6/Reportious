@@ -100,11 +100,11 @@ class Report extends React.PureComponent {
     };
 
     onAmountChange = dayIdx => event => {
-        this.props.updateDayAmount(dayIdx, event.target.value);
+        this.props.updateDayAmount(dayIdx, event.target.value || '');
     };
 
     onDrivingKMChange = event => {
-        this.props.updateDrivingKM(event.target.value);
+        this.props.updateDrivingKm(event.target.value);
     };
 
     onEnableEditMode = event => {
@@ -234,7 +234,7 @@ class Report extends React.PureComponent {
         const DroveHours = (
             <TextField
                 id="outlined-simple-start-adornment"
-                value={report.drivingInKM}
+                value={report.drivingInKm}
                 onChange={this.onDrivingKMChange}
                 variant="outlined"
                 label="נסיעות"
