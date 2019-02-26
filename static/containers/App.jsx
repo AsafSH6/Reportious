@@ -6,7 +6,10 @@ const mapStateToProps = state => ({
     isLoggedIn: state.authentication.isLoggedIn // TODO: Send request to the server to check it.
 });
 
+const mapDispatchToProps = dispatch => ({
+
+});
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(App)

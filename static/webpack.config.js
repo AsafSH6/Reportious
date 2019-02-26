@@ -30,7 +30,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx']
+        extensions: [".webpack.js", ".web.js", ".mjs", ".js", ".jsx", ".json"]
     },
     plugins: [
         new webpack.NamedModulesPlugin(),

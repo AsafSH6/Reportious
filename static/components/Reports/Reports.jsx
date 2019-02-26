@@ -1,8 +1,10 @@
 import React from 'react';
+
 import ClassNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
-import ReportPreview from './ReportPreview.jsx';
+import ReportPreview from '../../containers/ReportPreview.jsx';
+import Report from "../../containers/Report.jsx";
 import CreateReportButton from './CreateReportButton.jsx';
 
 
@@ -19,6 +21,7 @@ const reportsPreviewStyle = theme => ({
         margin: theme.spacing.unit * 4,
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'space-between',
     },
     preview: {
         flex: 1,
@@ -28,8 +31,22 @@ const reportsPreviewStyle = theme => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    reportsPreview: {
+        flex: 1,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+    },
     reportPreview: {
         margin: theme.spacing.unit * 2,
+        [theme.breakpoints.down('md')]: {
+            minWidth: 303,
+            minHeight: 390
+        }
     },
     createReport: {
         width: '100%',
@@ -39,7 +56,9 @@ const reportsPreviewStyle = theme => ({
     }
 });
 
-class Reports extends React.Component {
+
+@withStyles(reportsPreviewStyle)
+class Reports extends React.PureComponent {
     constructor(props) {
         super(props);
     }
@@ -51,24 +70,25 @@ class Reports extends React.Component {
     indexToColor = index => this.props.colors(index).hex();
 
     render() {
-        const { classes, reports, viewingReportId } = this.props;
+        const { classes, reports } = this.props;
 
         return (
             <div className={classes.root}>
                 <div className={classes.content}>
                     <div className={classes.preview}>
-                        {reports.map((report, idx) => (
-                            <ReportPreview
-                                key={`report-preview-${idx}`}
-                                className={ClassNames(classes.reportPreview, 'animated rotateInUpLeft')}
-                                style={{
-                                    animationDelay: `${idx * 0.2}s`
-                                }}
-                                report={report}
-                                alreadyViewingReport={viewingReportId === String(report.id)}
-                                backgroundColor={this.indexToColor(idx)}
-                            />
-                        ))}
+                        <div className={classes.reportsPreview}>
+                            {reports.map((report, idx) => (
+                                <ReportPreview
+                                    key={`report-preview-${report.id}`}
+                                    className={ClassNames(classes.reportPreview, 'animated rotateInUpLeft')}
+                                    style={{
+                                        animationDelay: `${idx * 0.2}s`
+                                    }}
+                                    report={report}
+                                    backgroundColor={this.indexToColor(idx)}
+                                />
+                            ))}
+                        </div>
                     </div>
                     <div
                         className={ClassNames(classes.createReport, 'animated flipInX')}
@@ -76,13 +96,16 @@ class Reports extends React.Component {
                             animationDelay: `${reports.length * 0.2 + 0.5}s`
                         }}
                     >
-                        <CreateReportButton />
+                        <CreateReportButton
+                            editNewReport={this.props.editNewReport}
+                        />
                     </div>
                 </div>
+                <Report />
             </div>
         )
     }
 }
 
 
-export default withStyles(reportsPreviewStyle)(Reports);
+export default Reports;

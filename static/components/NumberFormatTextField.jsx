@@ -9,10 +9,10 @@ function NumberFormatTextField(props) {
         <NumberFormat
             {...other}
             getInputRef={inputRef}
-            onValueChange={values => {
+            onValueChange={target => {
                 onChange({
                     target: {
-                        value: values.value,
+                        value: Number(target.value),
                     },
                 });
             }}

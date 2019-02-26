@@ -16,6 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AppBar from './AppBar.jsx'
 import NotFound from './NotFound.jsx'
+import { Snackbar } from '../containers'
 
 import {
     Welcome,
@@ -53,37 +54,44 @@ const styles = {
 };
 
 
-function App({ classes, isLoggedIn }) {
-    return (
-        <Router>
-            <MuiThemeProvider theme={theme} >
-                <CssBaseline/>
-                <div className={classes.root}>
-                    {isLoggedIn && <AppBar className={'animated fadeInDown'}/>}
+@withStyles(styles)
+class App extends React.PureComponent {
 
-                    <Switch>
-                        <Route
-                            exact path='/'
-                            component={Options}
-                        />
-                        <Route
-                            path='/welcome'
-                            component={Welcome}
-                        />
-                        <Route
-                            path='/reports/:reportType/:viewingReportId?'
-                            component={Reports}
-                        />
-                        <Route
-                            component={NotFound}
-                        />
-                    </Switch>
-                    {isLoggedIn === false && <Redirect to='/welcome/'/>}
-                </div>
-            </MuiThemeProvider>
-        </Router>
-    )
+    render() {
+        const { classes, isLoggedIn } = this.props;
+
+        return (
+            <Router>
+                <MuiThemeProvider theme={theme}>
+                    <CssBaseline/>
+                    <div className={classes.root}>
+                        {isLoggedIn && <AppBar className={'animated fadeInDown'}/>}
+
+                        <Switch>
+                            <Route
+                                exact path='/'
+                                component={Options}
+                            />
+                            <Route
+                                path='/welcome'
+                                component={Welcome}
+                            />
+                            <Route
+                                path='/reports/:reportType/:viewingReportId?'
+                                component={Reports}
+                            />
+                            <Route
+                                component={NotFound}
+                            />
+                        </Switch>
+                        {isLoggedIn === false && window.location.pathname !== '/welcome/' && <Redirect to='/welcome/'/>}
+                        <Snackbar />
+                    </div>
+                </MuiThemeProvider>
+            </Router>
+        )
+    }
 }
 
 
-export default withStyles(styles)(App);
+export default App;

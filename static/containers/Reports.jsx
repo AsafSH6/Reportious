@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { updateReports } from "../actions";
+import { updateReports, setReport } from "../actions";
 import { Reports } from '../components/Reports';
 import reportsService from '../services/Reports.jsx';
 import chroma from "chroma-js";
@@ -8,7 +8,6 @@ import chroma from "chroma-js";
 
 const mapStateToProps = (state, ownProps) => ({
     reports: state.reports,
-    viewingReportId: ownProps.match.params.viewingReportId,
     colors: chroma.scale(['#2A4858', '#0a65bc', '#8dc6da']).domain([0, state.reports.length]),
 });
 
@@ -16,10 +15,14 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     loadReports: () => {
         const { reportType } = ownProps.match.params;
-        const reports = reportsService.loadReports(reportType);
 
-        return dispatch(updateReports(reports))
+        reportsService.loadReports(reportType).then(reports => {
+            dispatch(updateReports(reports))
+        });
     },
+    editNewReport: report => {
+        dispatch(setReport(report, true))  // It's a new report.
+    }
 });
 
 export default connect(

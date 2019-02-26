@@ -1,26 +1,39 @@
 import React from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import Report from '../../containers/Report.jsx';
 import ReportDateSelection from './ReportDateSelection.jsx';
 import { getEmptyReport } from '../../utils.jsx';
 
 
+const styles = theme => ({
+    createReport: {
+        [theme.breakpoints.down('md')]: {
+            width: 156,
+            height: 156
+        }
+    },
+    addIcon: {
+        [theme.breakpoints.down('md')]: {
+            fontSize: 100
+        }
+    },
+});
+
+
+@withStyles(styles)
 class CreateReportButton extends React.Component {
     constructor(props) {
         super(props);
 
-        const dateBeforeOneMonth = new Date();
-        dateBeforeOneMonth.setMonth(dateBeforeOneMonth.getMonth() - 1); // Previous month.
+        const currentDate = new Date();
 
         this.state = {
             choosingReportDate: false,
-            selectedReportMonth: dateBeforeOneMonth.getMonth(),
-            selectedReportYear: dateBeforeOneMonth.getFullYear(),
-            creatingReport: false,
-            newReport: null
+            selectedReportMonth: currentDate.getMonth(),
+            selectedReportYear: currentDate.getFullYear(),
         }
     }
 
@@ -45,38 +58,37 @@ class CreateReportButton extends React.Component {
     createReportWithSelectedReportDate = () => {
         const { selectedReportMonth, selectedReportYear } = this.state;
         const selectedDate = new Date(selectedReportYear, selectedReportMonth);
+        const newReport = getEmptyReport(selectedDate);
+        this.props.editNewReport(newReport);
 
         this.setState({
             choosingReportDate: false,
-            creatingReport: true,
-            newReport: getEmptyReport(selectedDate)
         });
     };
 
     onClose = () => {
         this.setState({
             choosingReportDate: false,
-            creatingReport: false,
-            newReport: null
         });
     };
 
     render() {
         const {
-            creatingReport,
-            newReport,
             choosingReportDate,
             selectedReportMonth,
             selectedReportYear,
         } = this.state;
+        const { classes } = this.props;
 
         return (
             <div>
                 <Fab
+                    className={classes.createReport}
                     color='primary'
                     onClick={this.chooseReportDate}
                 >
                     <AddIcon
+                        className={classes.addIcon}
                         fontSize='default'
                     />
                 </Fab>
@@ -89,16 +101,6 @@ class CreateReportButton extends React.Component {
                     onSelectedReportYear={this.onSelectedReportYear}
                     onSaveReportDate={this.createReportWithSelectedReportDate}
                 />
-                {
-                    newReport ?
-                    (<Report
-                        isOpen={creatingReport}
-                        onClose={this.onClose}
-                        report={newReport}
-                        editMode={true}
-                        isNewReport={true} />)
-                    : null
-                }
             </div>
         )
     }

@@ -22,22 +22,22 @@ export const getHoursList = ({minHour = 8, maxHour = 19}) => {
 
 export const getEmptyReport = (date = null) => ({
     date: date || new Date(),
-    daysReport: [
+    days: [
         ...[...Array(31)].map((_, idx) => ({
-            day: idx + 1,
+            number: idx + 1,
             startHour: "",
             endHour: "",
             amount: ""
         }))],
-    drivingInKM: 0,
+    drivingInKm: 0,
 });
 
 export const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 
 export const getTotalWorkingHours = report => {
-    const reducer = (sum, dayReport) => {
-        const startHour = Date.parse(`01 Jan 1970 ${dayReport.startHour}:00 GMT`);
-        const endHour = Date.parse(`01 Jan 1970 ${dayReport.endHour}:00 GMT`);
+    const reducer = (sum, day) => {
+        const startHour = Date.parse(`01 Jan 1970 ${day.startHour}:00 GMT`);
+        const endHour = Date.parse(`01 Jan 1970 ${day.endHour}:00 GMT`);
         if(startHour && endHour && endHour > startHour) {  // Invalid day report.
             const dayWorkingHours = endHour - startHour;
             return sum + dayWorkingHours;
@@ -47,8 +47,39 @@ export const getTotalWorkingHours = report => {
         }
     };
 
-    return (report.daysReport.reduce(reducer, 0) / HOUR_IN_MILLISECONDS);
+    return (report.days.reduce(reducer, 0) / HOUR_IN_MILLISECONDS);
 };
 
 export const MONTHS_LIST = moment.months();
 export const YEAR_LIST = [...Array(4)].map((_, idx) => 2017 + idx);
+
+
+export const dayToRegularCase = day => ({
+    number: day.number,
+    start_hour: day.startHour || day.start_hour || "",
+    end_hour: day.endHour || day.end_hour || "",
+    amount: day.amount
+});
+
+export const dayToCamelCase = day => ({
+    number: day.number,
+    startHour: day.start_hour || day.startHour || "",
+    endHour: day.end_hour || day.endHour || "",
+    amount: day.amount
+});
+
+
+export const downloadFile = (data, fileType, fileName) => {
+    const bytes = new Uint8Array(data.length);
+    for (let i = 0; i < data.length; i++) {
+        bytes[i] = data.charCodeAt(i);
+    }
+
+    const blob = new Blob([bytes], {type: fileType});
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+
+    return true;
+}

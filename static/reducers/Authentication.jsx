@@ -3,7 +3,7 @@ import {
 } from "../constants";
 
 const defaultState = {
-    isLoggedIn: true
+    isLoggedIn: false
 };
 
 export default (state = defaultState, action) => {

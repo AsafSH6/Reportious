@@ -84,150 +84,69 @@ const styles = theme => ({
     }
 });
 
-class Report extends React.Component {
+
+@withStyles(styles)
+class Report extends React.PureComponent {
     constructor(props) {
         super(props);
-
-        this.state = {
-            report: this.props.report,
-            originalReport: _.cloneDeep(this.props.report),
-            editMode: this.props.editMode,
-            isNewReport: this.props.isNewReport,
-        }
     }
 
-    onStartHourChange = idx => event => {
-        this.setState(prevState => {
-            const { report } = prevState;
-            const daysReport = [...report.daysReport];
-            const changedDayReport = daysReport[idx];
-
-            daysReport[idx] = {
-                ...changedDayReport,
-                startHour: event.target.value
-            };
-
-            return {
-                report: {
-                    ...report,
-                    daysReport: daysReport
-                }
-            }
-        })
+    onStartHourChange = dayIdx => event => {
+        this.props.updateDayStartHour(dayIdx, event.target.value);
     };
 
-    onEndHourChange = idx => event => {
-        this.setState(prevState => {
-            const { report } = prevState;
-            const daysReport = [...report.daysReport];
-            const changedDayReport = daysReport[idx];
-
-            daysReport[idx] = {
-                ...changedDayReport,
-                endHour: event.target.value
-            };
-
-            return {
-                report: {
-                    ...report,
-                    daysReport: daysReport
-                }
-            }
-        })
+    onEndHourChange = dayIdx => event => {
+        this.props.updateDayEndHour(dayIdx, event.target.value);
     };
 
-    onAmountChange = idx => event => {
-        this.setState(prevState => {
-            const { report } = prevState;
-            const daysReport = report.daysReport;
-            const changedDayReport = daysReport[idx];
-
-            daysReport[idx] = {
-                ...changedDayReport,
-                amount: event.target.value
-            };
-
-            return {
-                report: {
-                    ...report,
-                    daysReport: [...daysReport]
-                }
-            }
-        })
+    onAmountChange = dayIdx => event => {
+        this.props.updateDayAmount(dayIdx, event.target.value || '');
     };
 
     onDrivingKMChange = event => {
-        this.setState(prevState => {
-            const { report } = prevState;
-
-            return {
-                report: {
-                    ...report,
-                    drivingInKM: event.target.value
-                }
-            }
-        })
+        this.props.updateDrivingKm(event.target.value);
     };
 
     onEnableEditMode = event => {
-        this.setState({
-            editMode: true
-        })
+        this.props.editReport(event);
     };
 
     onClose = event => {
-        this.props.onClose(event);
-        this.setState(prevState => ({
-            editMode: false,
-            report: prevState.originalReport,
-        }))
+        this.props.closeReport(event);
     };
 
     onClickAway = event => {
-        if (this.state.editMode === false) {
+        // Exit page on click away only if not in edit mode.
+        if (this.props.editMode === false) {
             return this.onClose(event);
         }
     };
 
     onCancel = event => {
-        this.setState(prevState => ({
-            editMode: false,
-            report: prevState.originalReport
-        }))
+        this.props.cancelEditReport(event);
     };
 
     onSave = event => {
-        const { report } = this.state;
-
-        this.props.saveReport(report);
-        this.setState({
-            editMode: false,
-            originalReport: report,
-        })
+        const { report, saveReport } = this.props;
+        saveReport(report)
     };
 
     onCreate = event => {
-        const { report } = this.state;
-
-        this.props.addReport(report);
-        this.setState({
-            editMode: false,
-            isNewReport: false,
-            originalReport: report,
-        })
+        const { report, createReport } = this.props;
+        createReport(report);
     };
 
     getTotalWorkingHours = () => {
-        const { report } = this.state;
+        const { report } = this.props;
         return getTotalWorkingHours(report);
     };
 
     render() {
-        const { report, editMode, isNewReport } = this.state;
-        const { classes, isOpen, downloadReport } = this.props;
+        const { classes, report, isNewReport, editMode, downloadReport } = this.props;
+        if (report === null) return null;
+
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
-
         const ReportSubjects = ['מספר גנים', 'עד שעה', 'משעה', 'יום בחודש'].map((subject, idx) => (
             <Typography
                 key={`report-subject-${idx}`}
@@ -237,7 +156,8 @@ class Report extends React.Component {
             </Typography>
         ));
 
-        const ReportWorkingHours = report.daysReport.map((dayReport, idx) => (
+        const ReportWorkingHours = report.days
+            .map((day, idx) => (
                 <div
                     key={`day-report-${report.id}-${idx}`}
                     className={classes.reportRow}
@@ -245,7 +165,7 @@ class Report extends React.Component {
                     <TextField
                         className={classes.reportRowItem}
                         onChange={this.onAmountChange(idx)}
-                        value={dayReport.amount}
+                        value={day.amount}
                         inputProps={{
                             className: classes.input
                         }}
@@ -255,7 +175,7 @@ class Report extends React.Component {
                         disabled={editMode === false}
                     />
                     <Select
-                        value={dayReport.endHour}
+                        value={day.endHour}
                         onChange={this.onEndHourChange(idx)}
                         name="בחר"
                         displayEmpty
@@ -277,7 +197,7 @@ class Report extends React.Component {
                         ))}
                     </Select>
                     <Select
-                        value={dayReport.startHour}
+                        value={day.startHour}
                         onChange={this.onStartHourChange(idx)}
                         name="בחר"
                         displayEmpty
@@ -300,7 +220,7 @@ class Report extends React.Component {
                     </Select>
                     <TextField
                         className={classes.reportRowItem}
-                        value={`.${dayReport.day}`}
+                        value={`.${day.number}`}
                         inputProps={{
                             className: classes.input
                         }}
@@ -314,7 +234,7 @@ class Report extends React.Component {
         const DroveHours = (
             <TextField
                 id="outlined-simple-start-adornment"
-                value={report.drivingInKM}
+                value={report.drivingInKm}
                 onChange={this.onDrivingKMChange}
                 variant="outlined"
                 label="נסיעות"
@@ -379,7 +299,7 @@ class Report extends React.Component {
         const ActionButtons = (
             <React.Fragment>
             {editMode === false ? (
-                <Button onClick={downloadReport} color="primary">
+                <Button onClick={() => downloadReport(report.id)} color="primary">
                     Download
                 </Button>)
                    : (
@@ -393,7 +313,7 @@ class Report extends React.Component {
                                 Save
                            </Button>)
                    }
-                    <Button onClick={this.onCancel} color="primary">
+                    <Button onClick={isNewReport ? this.onClose : this.onCancel} color="primary">
                         Cancel
                     </Button>
                </React.Fragment>
@@ -405,7 +325,7 @@ class Report extends React.Component {
         return (
             <div>
                 <Dialog
-                    open={isOpen}
+                    open
                     onClose={this.onClickAway}
                     aria-labelledby="form-dialog-title"
                     className={classes.root}
@@ -452,4 +372,4 @@ class Report extends React.Component {
 }
 
 
-export default withStyles(styles)(Report);
+export default Report;
