@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import Report from '../../containers/Report.jsx';
 import ReportDateSelection from './ReportDateSelection.jsx';
 import { getEmptyReport } from '../../utils.jsx';
 
