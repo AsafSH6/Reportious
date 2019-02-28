@@ -35,6 +35,13 @@ const styles = theme => ({
         justifyContent: 'space-between',
         margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit *8}px`,
     },
+    welcomeMessage: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
     content: {
         flex: 1,
         display: 'flex',
@@ -44,13 +51,32 @@ const styles = theme => ({
     },
     element: {
         color: 'white',
+        fontSize: 50,
         [theme.breakpoints.down('md')]: {
-            fontSize: '3rem'
+            fontSize: '4rem'
         }
     },
-    logInForm: {
+    logInFormContainer: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        width: '100%',
+        height: '100%',
+    },
+    logInFormItem: {
+        margin: theme.spacing.unit * 2
+    },
+    logInFormInputs: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    loginFormInput: {
+        fontSize: 70
+    },
+    loginFormInputLabel: {
+        fontSize: 30
     },
     textField: {
         borderColor: 'white'
@@ -145,21 +171,23 @@ class Welcome extends React.Component {
                 <div
                     className={classes.content}
                 >
-                    <LibraryBooks
-                        className={'animated bounceIn'}
-                        style={{
-                            fontSize: 100, color: 'white',
-                            animationDelay: '2.5s'
-                        }}
-                    />
-                    <ReportiousTitle
-                        className={ClassNames(classes.element, 'animated fadeInUp')}
-                        style={{
-                            animationDelay: '1s'
-                        }}
-                    >
-                        A safe place for all your reports
-                    </ReportiousTitle>
+                    <div className={classes.welcomeMessage}>
+                        <LibraryBooks
+                            className={'animated bounceIn'}
+                            style={{
+                                fontSize: 100, color: 'white',
+                                animationDelay: '2.5s'
+                            }}
+                        />
+                        <ReportiousTitle
+                            className={ClassNames(classes.element, 'animated fadeInUp')}
+                            style={{
+                                animationDelay: '1s'
+                            }}
+                        >
+                            A safe place for all your reports
+                        </ReportiousTitle>
+                    </div>
                     {/*<ReportiousLink*/}
                         {/*to='/'*/}
                         {/*buttonPassThroughProps={{*/}
@@ -173,23 +201,30 @@ class Welcome extends React.Component {
                         {/*LOGIN WITH GOOGLE*/}
                     {/*</ReportiousLink>*/}
                     <div
-                        className={ClassNames(classes.logInForm, 'animated fadeInUp')}
+                        className={ClassNames(classes.logInFormContainer, 'animated fadeInUp')}
                         style={{
                             animationDelay: '1.5s',
                         }}
                     >
                         <Paper
-                            className={ClassNames(classes.element, classes.logInForm,)}
+                            className={classes.logInFormInputs}
                         >
                             <TextField
+                              className={classes.logInFormItem}
                               id="standard-username-input"
                               label="User Name"
                               margin="normal"
                               onChange={this.onUsernameChange}
                               onKeyDown={this.keyPress}
-                              style={{margin: 8}}
+                              InputLabelProps={{
+                                  className: classes.loginFormInputLabel
+                              }}
+                              InputProps={{
+                                  className: classes.loginFormInput
+                              }}
                             />
                             <TextField
+                              className={classes.logInFormItem}
                               id="standard-password-input"
                               label="Password"
                               type="password"
@@ -197,11 +232,17 @@ class Welcome extends React.Component {
                               margin="normal"
                               onChange={this.onPasswordChange}
                               onKeyDown={this.keyPress}
-                              style={{margin: 8}}
+                              InputLabelProps={{
+                                  className: classes.loginFormInputLabel
+                              }}
+                              InputProps={{
+                                  className: classes.loginFormInput
+                              }}
                             />
                         </Paper>
                         <ReportiousButton
-                            style={{margin: 8}}
+                            className={classes.element}
+                            // style={{margin: 8}}
                             onClick={this.logIn}
                         >
                             Log In

@@ -70,7 +70,8 @@ class App extends React.PureComponent {
                         <Switch>
                             <Route
                                 exact path='/'
-                                component={Options}
+                                // component={Options}
+                                component={Reports}
                             />
                             <Route
                                 path='/welcome'

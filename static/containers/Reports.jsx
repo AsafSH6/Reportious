@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     loadReports: () => {
-        const { reportType } = ownProps.match.params;
+        const { reportType } = ownProps.match.params || 'working-hours-report';
 
         reportsService.loadReports(reportType).then(reports => {
             dispatch(updateReports(reports))
