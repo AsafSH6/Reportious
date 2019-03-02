@@ -90,7 +90,7 @@ class ReportPreview extends React.PureComponent {
                 >
                     <Typography
                         className={classes.title}
-                        variant='subtitle1'
+                        variant='h6'
                         color='secondary'
                     >
                         {toFormattedDate(report.date)}

@@ -35,6 +35,9 @@ const styles1 = theme => ({
   },
   icon: {
     fontSize: 20,
+    [theme.breakpoints.down('md')]: {
+      fontSize: 50,
+    }
   },
   iconVariant: {
     opacity: 0.9,
@@ -87,35 +90,41 @@ MySnackbarContent.propTypes = {
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
 const styles2 = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
+  snackbar: {
+    width: '100%',
+    marginBottom: theme.spacing.unit,
   },
+  snackbarContent: {
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 'inherit',
+      fontSize: 50,
+    }
+  }
 });
 
 class CustomizedSnackbars extends React.PureComponent {
 
   render() {
-    const { isOpen, onClose, variant, message } = this.props;
+    const { classes, isOpen, onClose, variant, message } = this.props;
 
     return (
-      <div>
         <Snackbar
-          style={{marginBottom: 8}}
+          className={classes.snackbar}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
           }}
           open={isOpen}
-          autoHideDuration={3000}
+          autoHideDuration={2500}
           onClose={onClose}
         >
           <MySnackbarContentWrapper
+            className={classes.snackbarContent}
             onClose={onClose}
             variant={variant}
             message={message}
           />
         </Snackbar>
-      </div>
     );
   }
 }

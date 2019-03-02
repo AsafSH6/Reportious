@@ -28,6 +28,7 @@ import NumberFormatTextField from '../NumberFormatTextField.jsx'
 
 const styles = theme => ({
     root: {
+        width: '100%',
     },
     iconButtons: {
         position: 'absolute',
@@ -49,40 +50,119 @@ const styles = theme => ({
     reportRow: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
     },
     reportRowItem: {
         margin: `${theme.spacing.unit}px ${theme.spacing.unit * 4}px`,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: 25,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 50,
+        }
     },
     reportDays: {
 
     },
+    reportRowDay: {
+        textAlign: 'center',
+        minWidth: 168.5,
+        [theme.breakpoints.up('lg')]: {
+            minWidth: 30,
+            maxWidth: 30,
+        }
+    },
+    reportSelectHour: {
+        textAlign: 'center',
+        minWidth: 154,
+        [theme.breakpoints.up('lg')]: {
+            minWidth: 93,
+            maxWidth: 93,
+        }
+    },
+    reportRowAmount: {
+        textAlign: 'center',
+        minWwidth: 168.4,
+        [theme.breakpoints.up('lg')]: {
+            minWidth: 30,
+            maxWidth: 30,
+        }
+    },
     input: {
-        textAlign: 'center'
+        fontSize: 'inherit',
+        textAlign: 'center',
     },
     secondContent: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        minHeight: 90,
+        minHeight: 120,
         padding: '0px 24px 0px',
-    },
-    selectHour: {
-        minWidth: 82.82,
     },
     drivingDistance: {
         width: 170,
+        [theme.breakpoints.down('md')]: {
+            width: 250,
+            fontSize: 50,
+        }
     },
     totalWorkingHours: {
         width: 150,
+        [theme.breakpoints.down('md')]: {
+            width: 180,
+            fontSize: 50,
+        }
+    },
+    inputLabel: {
+        [theme.breakpoints.down('md')]: {
+            fontSize: 20,
+        }
     },
     actions: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+    },
+    menuItem: {
+        fontSize: '2rem',
     }
 });
+
+
+const ReportButton = ({ children , ...props }) => (
+    <Button
+        color='primary'
+        style={{fontSize: '2rem'}}
+        {...props}
+    >
+        {children}
+    </Button>
+);
+
+const iconStyles = theme => ({
+    icon: {
+        [theme.breakpoints.down('md')]: {
+            fontSize: 50
+        }
+    },
+});
+
+@withStyles(iconStyles)
+class ReportIconButton extends React.PureComponent {
+    render() {
+        const { classes, Icon, ...props } = this.props;
+        return (
+            <IconButton
+                {...props}
+            >
+                <Icon
+                    className={classes.icon}
+                />
+            </IconButton>
+        );
+    }
+}
 
 
 @withStyles(styles)
@@ -147,10 +227,11 @@ class Report extends React.PureComponent {
 
         const totalWorkingHours = this.getTotalWorkingHours();
         const possibleWorkHoursList = getHoursList({minHour: 8, maxHour: 19});
-        const ReportSubjects = ['מספר גנים', 'עד שעה', 'משעה', 'יום בחודש'].map((subject, idx) => (
+        const subjectsClassName = [classes.reportRowAmount, classes.reportSelectHour, classes.reportSelectHour, classes.reportRowDay];
+        const ReportSubjects = ["מס' גנים", 'סיום', 'התחלה', 'יום'].map((subject, idx) => (
             <Typography
                 key={`report-subject-${idx}`}
-                className={classes.reportRowItem}
+                className={ClassNames(classes.reportRowItem, subjectsClassName[idx])}
             >
                 {subject}
             </Typography>
@@ -163,13 +244,14 @@ class Report extends React.PureComponent {
                     className={classes.reportRow}
                 >
                     <TextField
-                        className={classes.reportRowItem}
+                        className={ClassNames(classes.reportRowItem, classes.reportRowAmount)}
                         onChange={this.onAmountChange(idx)}
                         value={day.amount}
                         inputProps={{
                             className: classes.input
                         }}
                         InputProps={{
+                            className: classes.input,
                             inputComponent: NumberFormatTextField,
                         }}
                         disabled={editMode === false}
@@ -179,18 +261,25 @@ class Report extends React.PureComponent {
                         onChange={this.onEndHourChange(idx)}
                         name="בחר"
                         displayEmpty
-                        className={ClassNames(classes.reportRowItem, classes.selectHour)}
+                        className={ClassNames(classes.reportRowItem, classes.reportSelectHour)}
                         disabled={editMode === false}
                     >
-                        <MenuItem value="" disabled>
+                        <MenuItem
+                            className={classes.menuItem}
+                            value="" disabled
+                        >
                             בחר
                         </MenuItem>
-                        <MenuItem value="-">
+                        <MenuItem
+                            className={classes.menuItem}
+                            value="-"
+                        >
                             --
                         </MenuItem>
                         {possibleWorkHoursList.map((workHour, idx) => (
                             <MenuItem
                                 key={`end-hour-${report.id}-${idx}`}
+                                className={classes.menuItem}
                                 value={workHour}>
                                 {workHour}
                             </MenuItem>
@@ -201,30 +290,38 @@ class Report extends React.PureComponent {
                         onChange={this.onStartHourChange(idx)}
                         name="בחר"
                         displayEmpty
-                        className={ClassNames(classes.reportRowItem, classes.selectHour)}
+                        className={ClassNames(classes.reportRowItem, classes.reportSelectHour)}
                         disabled={editMode === false}
                     >
-                        <MenuItem value="" disabled>
+                        <MenuItem
+                            className={classes.menuItem}
+                            value="" disabled
+                        >
                             בחר
                         </MenuItem>
-                        <MenuItem value="-">
+                        <MenuItem
+                            className={classes.menuItem}
+                            value="-"
+                        >
                             --
                         </MenuItem>
                         {possibleWorkHoursList.map((workHour, idx) => (
                             <MenuItem
                                 key={`start-hour-${report.id}-${idx}`}
+                                className={classes.menuItem}
                                 value={workHour}>
                                 {workHour}
                             </MenuItem>
                         ))}
                     </Select>
                     <TextField
-                        className={classes.reportRowItem}
+                        className={ClassNames(classes.reportRowItem, classes.reportRowDay)}
                         value={`.${day.number}`}
                         inputProps={{
                             className: classes.input
                         }}
                         InputProps={{
+                            className: classes.input,
                             disableUnderline: true, readOnly: true
                         }}
                     />
@@ -239,10 +336,14 @@ class Report extends React.PureComponent {
                 variant="outlined"
                 label="נסיעות"
                 className={classes.drivingDistance}
+                InputLabelProps={{
+                    className: classes.inputLabel
+                }}
                 inputProps={{
                     className: classes.input
                 }}
                 InputProps={{
+                    className: classes.input,
                     readOnly: editMode === false,
                     inputComponent: NumberFormatTextField,
                     startAdornment: <InputAdornment position="start">קילומטרים</InputAdornment>,
@@ -257,10 +358,14 @@ class Report extends React.PureComponent {
                 label="סך כל שעות עבודה"
                 value={totalWorkingHours}
                 margin="normal"
+                InputLabelProps={{
+                    className: classes.inputLabel
+                }}
                 inputProps={{
                     className: classes.input
                 }}
                 InputProps={{
+                    className: classes.input,
                     readOnly: true,
                     inputComponent: NumberFormatTextField,
                 }}
@@ -269,12 +374,12 @@ class Report extends React.PureComponent {
         );
 
         const Close = (
-            (<IconButton
+            (<ReportIconButton
                 onClick={this.onClose}
                 className={classes.close}
+                Icon={Cancel}
             >
-                <Cancel/>
-            </IconButton>)
+            </ReportIconButton>)
         );
 
         const IconButtons = (
@@ -283,12 +388,12 @@ class Report extends React.PureComponent {
             >
                 {
                     editMode === false ?
-                        (<IconButton
+                        (<ReportIconButton
                             onClick={this.onEnableEditMode}
                             className={classes.edit}
+                            Icon={Edit}
                         >
-                            <Edit/>
-                        </IconButton>)
+                        </ReportIconButton>)
                             :
                         null
                 }
@@ -299,23 +404,23 @@ class Report extends React.PureComponent {
         const ActionButtons = (
             <React.Fragment>
             {editMode === false ? (
-                <Button onClick={() => downloadReport(report.id)} color="primary">
-                    Download
-                </Button>)
+                <ReportButton onClick={() => downloadReport(report.id)} size='large' color="primary">
+                    הורדה
+                </ReportButton>)
                    : (
                <React.Fragment>
                    {isNewReport ? (
-                           <Button onClick={this.onCreate} color="primary">
-                               Create
-                           </Button>)
+                           <ReportButton onClick={this.onCreate} color="primary">
+                               יצירה
+                           </ReportButton>)
                            : (
-                           <Button onClick={this.onSave} color="primary">
-                                Save
-                           </Button>)
+                           <ReportButton onClick={this.onSave} color="primary">
+                                שמירה
+                           </ReportButton>)
                    }
-                    <Button onClick={isNewReport ? this.onClose : this.onCancel} color="primary">
-                        Cancel
-                    </Button>
+                    <ReportButton onClick={isNewReport ? this.onClose : this.onCancel} color="primary">
+                        ביטול
+                    </ReportButton>
                </React.Fragment>
                 )
             }
@@ -323,50 +428,52 @@ class Report extends React.PureComponent {
         );
 
         return (
-            <div>
-                <Dialog
-                    open
-                    onClose={this.onClickAway}
-                    aria-labelledby="form-dialog-title"
-                    className={classes.root}
+            <Dialog
+                open
+                onClose={this.onClickAway}
+                maxWidth='md'
+                aria-labelledby="form-dialog-title"
+                className={classes.root}
+            >
+                {IconButtons}
+                <DialogTitle
+                    id="form-dialog-title"
+                    className={classes.title}
+                    disableTypography
                 >
-                    {IconButtons}
-                    <DialogTitle
-                        id="form-dialog-title"
-                        className={classes.title}
-                    >
+                    <Typography variant='h3'>
                         {toFormattedDate(report.date)}
-                    </DialogTitle>
-                    <Divider light/>
-                    <DialogContent
-                        className={classes.content}
+                    </Typography>
+                </DialogTitle>
+                <Divider light/>
+                <DialogContent
+                    className={classes.content}
+                >
+                    <div
+                        className={classes.reportRow}
                     >
-                        <div
-                            className={classes.reportRow}
-                        >
-                            {ReportSubjects}
-                        </div>
-                        <Divider variant='middle'/>
-                        <div
-                            className={classes.reportDays}
-                        >
-                            {ReportWorkingHours}
-                        </div>
-                    </DialogContent>
-                    <DialogContent
-                        className={classes.secondContent}
+                        {ReportSubjects}
+                    </div>
+                    <Divider variant='middle'/>
+                    <div
+                        className={classes.reportDays}
                     >
-                        {WorkedHours}
-                        {DroveHours}
-                    </DialogContent>
-                    <Divider light/>
-                    <DialogActions
-                        className={classes.actions}
-                    >
-                        {ActionButtons}
-                    </DialogActions>
-                </Dialog>
-            </div>
+                        {ReportWorkingHours}
+                    </div>
+                </DialogContent>
+                <DialogContent
+                    className={classes.secondContent}
+                >
+                    {WorkedHours}
+                    {DroveHours}
+                </DialogContent>
+                <Divider light/>
+                <DialogActions
+                    className={classes.actions}
+                >
+                    {ActionButtons}
+                </DialogActions>
+            </Dialog>
         )
     }
 }

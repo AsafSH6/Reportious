@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -22,10 +24,22 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     formControl: {
         margin: theme.spacing.unit,
-        minWidth: 120,
+    },
+    select: {
+        textAlign: 'center',
+        minWidth: 154,
+        [theme.breakpoints.up('lg')]: {
+            minWidth: 93,
+            maxWidth: 93,
+        },
+        fontSize: 25,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 50,
+        }
     },
 });
 
@@ -52,15 +66,26 @@ class ReportDateSelection extends React.PureComponent {
             <Dialog
                 disableBackdropClick
                 disableEscapeKeyDown
+                maxWidth='md'
                 open={choosingReportDate}
                 onClose={this.onClose}
             >
-                <DialogTitle>Choose Report Month</DialogTitle>
+                <DialogTitle
+                    disableTypography
+                >
+                    <Typography
+                        variant='h3'
+                    >
+                        בחרי את תאריך הדוח
+                    </Typography>
+                </DialogTitle>
+                <Divider />
                 <DialogContent>
                     <form className={classes.root}>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="month-input">Month</InputLabel>
+                            <InputLabel htmlFor="month-input">חודש</InputLabel>
                             <Select
+                                className={classes.select}
                                 value={selectedReportMonth}
                                 onChange={onSelectedReportMonth}
                                 input={<Input id="month-input" />}
@@ -78,8 +103,9 @@ class ReportDateSelection extends React.PureComponent {
                             </Select>
                         </FormControl>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="year-input">Year</InputLabel>
+                            <InputLabel htmlFor="year-input">שנה</InputLabel>
                             <Select
+                                className={classes.select}
                                 value={selectedReportYear}
                                 onChange={onSelectedReportYear}
                                 input={<Input id="year-input" />}

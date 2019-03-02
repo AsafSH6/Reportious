@@ -22,7 +22,7 @@ class WorkingHoursReportQuery(object):
         if not user or user.is_anonymous:
             raise Exception('Not logged in.')
 
-        return WorkingHoursReport.objects.filter(user=user)
+        return WorkingHoursReport.objects.filter(user=user).order_by('-date')
 
 
 class Query(WorkingHoursReportQuery):

@@ -53,7 +53,7 @@ const styles = theme => ({
         color: 'white',
         fontSize: 50,
         [theme.breakpoints.down('md')]: {
-            fontSize: '4rem'
+            fontSize: '2.5rem'
         }
     },
     logInFormContainer: {
@@ -70,16 +70,21 @@ const styles = theme => ({
     },
     logInFormInputs: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        margin: theme.spacing.unit,
     },
     loginFormInput: {
-        fontSize: 70
+        fontSize: 70,
+        height: 155,
     },
     loginFormInputLabel: {
-        fontSize: 30
+        fontSize: 40
     },
     textField: {
         borderColor: 'white'
+    },
+    loginButton: {
+        marginBottom: theme.spacing.unit,
     }
 });
 
@@ -241,8 +246,7 @@ class Welcome extends React.Component {
                             />
                         </Paper>
                         <ReportiousButton
-                            className={classes.element}
-                            // style={{margin: 8}}
+                            className={classNames(classes.element, classes.loginButton)}
                             onClick={this.logIn}
                         >
                             Log In

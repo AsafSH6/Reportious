@@ -65,12 +65,16 @@ class WorkingHoursReport(models.Model):
         total_driving_km_row = ['נסיעות', self.driving_in_km, 'ק"מ', '']
         df.loc[len(df)] = total_driving_km_row
 
+        user_info = [self.user.first_name, self.user.last_name, '', '']
+        df.loc[len(df)] = user_info
+
         df.columns = ['יום', 'שעת התחלה', 'שעת סיום', 'מספר גנים']
         sf = StyleFrame(df)
         sf.set_column_width_dict({
             ('שעת התחלה', 'שעת סיום'): 16,
+            ('יום', 'מספר גנים'): 13
         })
-        sf.apply_style_by_indexes(indexes_to_style=sf.index[-3:],
+        sf.apply_style_by_indexes(indexes_to_style=sf.index[-4:-1],
                                   styler_obj=Styler(bold=True),
                                   cols_to_style='יום')
         output = BytesIO()
