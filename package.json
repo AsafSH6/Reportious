@@ -6,7 +6,8 @@
   "scripts": {
     "buildprod": "node node_modules/webpack/bin/webpack.js --config ./webpack_prod.config.js",
     "build": "node node_modules/webpack/bin/webpack.js --config ./webpack.config.js --mode development --watch",
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development --host localhost --open --watch"
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development --host localhost --open --watch",
+    "heroku-postbuild": "cd static && yarn install && yarn buildprod"
   },
   "dependencies": {
     "@babel/core": "^7.2.0",
