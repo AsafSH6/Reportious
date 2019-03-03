@@ -1,5 +1,6 @@
 from reportious.settings import *
 
-DEBUG = False
+ALLOWED_HOSTS = ['.herokuapp.com']
+DEBUG = True
 
 SECRET_KEY = os.getenv('SECRET_KEY')

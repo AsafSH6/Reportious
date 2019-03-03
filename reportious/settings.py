@@ -23,6 +23,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7p9g5j3k&ol&f4j^8+4!$u-qp41doerfg)+v1unufy&ev!1(9p'
+ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
